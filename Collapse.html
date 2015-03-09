@@ -14,32 +14,49 @@
    </head>
    
    <body ng-controller="TicketController">
-      <div clss="testi">
+      <div class="testi">
          <h1>Account Management</h1>
-         <button type="button" ng-click = "TicketCall()">Update <span class="badge">asd</span> </button>	 
+		 <input type="text"> </input>  <button class="btn btn-default">Search</button>
       </div>
       <div class="panels">
-         <accordion close-others="oneAtATime">
+          <accordion close-others="oneAtATime">
             <div class="panel panel-success" ng-repeat="x in GetTicket" accordion-group heading="{{x.Country}}" >
-               <div class="panel-heading" > <p><button type="button" class="btn btn-default" ng-click="">Edit </button> <button type="button" class="btn btn-default" ng-click=""> Delete</button></p>
-                  <div  id="collapseOne" class="panel-collapse collapse in">
-                   </div> 				  
-                  </accordion-group> </div>
+                <accordion-heading>
+				{{x.Country}}
+				<div class="btn-group pull-right">
+				<button type="button" class="btn btn-small" ng-click="">Edit</button> <button type="button" class="btn btn-small" ng-click="deleteCall(IdSelected)">Delete</button>
+                  </div>
+				  <div  id="collapseOne" class="panel-collapse collapse in">
+                   </div> 		
+                  </accordion-heading>				   
+                  </accordion-group> 	  
+				  
                <div class="panel panel-info" ng-repeat="x in GetTicket" accordion-group heading="{{x.City}}" >
-                  <div class="panel-heading"> <p><button type="button" class="btn btn-default" ng-click="">Edit </button> <button type="button" class="btn btn-default" ng-click=""> Delete</button></p>
+                   <accordion-heading>
+				{{x.City}}
+				<div class="btn-group pull-right">
+				<button type="button" class="btn btn-small" ng-click="">Edit</button> <button type="button" class="btn btn-small" ng-click="deleteCall(IdSelected)">Delete</button>
                   </div>
-                  <div id="collapseOne" class="panel-collapse collapse in">
-                  </div>
-                  </accordion-group>
+				  <div  id="collapseOne" class="panel-collapse collapse in">
+                   </div> 		
+                  </accordion-heading>				   
+                  </accordion-group> 
 				  
                   <div class="panel panel-warning" ng-repeat="x in GetTicket" accordion-group heading="{{x.Name}}" >
-                     <!-- ng-repeat="y in GetArticle"-->
-                     <div class="panel-heading"> <p><button type="button" class="btn btn-default" ng-click="">Edit </button> <button type="button" class="btn btn-default" ng-click=""> Delete</button></p>
-                     </div>
-                     <div id="collapseOne" class="panel-collapse collapse in"></div>
+                      <accordion-heading>
+				{{x.Name}}
+				<div class="btn-group pull-right">
+				<button type="button" class="btn btn-small" ng-click="">Edit</button> <button type="button" class="btn btn-small" ng-click="deleteCall(IdSelected)">Delete</button>
                   </div>
-                  </accordion-group> </accordion>
+				  <div  id="collapseOne" class="panel-collapse collapse in">
+                   </div> 		
+                  </accordion-heading>				   
+                  </accordion-group> 
          </div>
          </div> 
       </div>
+	  <div> <h3>Send message</h3> 
+	  <textarea rows="4" cols="50" class=""> </textarea> <br>
+	  <button class="btn btn-default"> Send</button>
+	  </div>
    </body>
