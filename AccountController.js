@@ -4,7 +4,7 @@ app.controller('TicketController', [ '$http', '$scope', function($http, $scope) 
          
 		   $scope.GetQueue = [];
 		   $scope.GetTicket = [];
-		   $scope.GetArticle = [];
+		   $scope.GetBoard = [];
 		   $scope.isCollapsed = false;
 		   $scope.IdSelected = null;
 		   
@@ -17,15 +17,16 @@ app.controller('TicketController', [ '$http', '$scope', function($http, $scope) 
 			
 		  // $scope.TicketCall = function() { 
 		   $http.get('http://www.w3schools.com/website/Customers_JSON.php').success(function(data) {
-		   $scope.GetArticle= data;
+		   $scope.GetBoard= data;
 		    }); 
 			
 		   $http.get('http://www.w3schools.com/website/Customers_JSON.php').success(function(data) {
 		   $scope.GetTicket= data;
 		    }); 	
 			//}
- $scope.deleteCall = function(IdSelected) {
-    $http.delete('http://127.0.0.1:8080/api/queue/' + IdSelected)
+
+	$scope.deleteCall = function(IdSelected) {
+    $http.delete('http://127.0.0.1:8080/api/ticket/' + IdSelected)
         .success(function(data) {
             $scope.GetQueue = data;
             console.log(data);
