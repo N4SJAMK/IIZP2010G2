@@ -1,11 +1,9 @@
 #!/bin/bash
 #
-# Clones the repositories using 'https'. Use the 'initialize-ssh' if you prefer
-# to use 'ssh' in cloning the repositories.
+# Clones the repositories using 'ssh'.
 
 # Clone our repositories.
-git clone https://github.com/N4SJAMK/teamboard-io           io
-git clone https://github.com/N4SJAMK/teamboard-api          api
-git clone https://github.com/N4SJAMK/teamboard-client       client
-git clone https://github.com/N4SJAMK/teamboard-client-react client-react
-
+git clone git@github.com:N4SJAMK/teamboard-io.git           io
+git clone git@github.com:N4SJAMK/teamboard-api.git          api
+git clone git@github.com:N4SJAMK/teamboard-client.git       client
+git clone git@github.com:N4SJAMK/teamboard-client-react.git client-react
