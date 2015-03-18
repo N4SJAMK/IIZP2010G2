@@ -10,7 +10,7 @@ Open git bash and give the following commands
 
 
 * git clone https://github.com/N4SJAMK/IIZP2010G2.git
-* (Give your username and password if asked to)
+* _(Give your username and password if asked to)_
 * cd IIZP2010G2
 * sh initialize.sh
 * vagrant up
@@ -18,14 +18,14 @@ Open git bash and give the following commands
 * cd teamboard-api
 * npm install --no-bin-links
 * npm start &
-* (Wait for "Worker [..." and then press enter)
+* _(Wait for "Worker [..." and then press enter)_
 * cd ../teamboard-io
 * npm install --no-bin-links
 * npm start &
-* (Wait for "socket.io ..." and then press enter)
+* _(Wait for "socket.io ..." and then press enter)_
 * cd ../teamboard-client-react
 * npm install --no-bin-links && gulp
-* (Ready after "Finished 'default' after ...")
+* _(Ready after "Finished 'default' after ...")_
 
 
 After these commands you should have contriboard up and running on localhost:8000 and adminpanel on localhost:8001
@@ -41,13 +41,13 @@ Open git bash and give the following commands
 * vagrant ssh
 * cd teamboard-api
 * npm start &
-* (Wait for "Worker [..." and then press enter)
+* _(Wait for "Worker [..." and then press enter)_
 * cd ../teamboard-io
 * npm start &
-* (Wait for "socket.io ..." and then press enter)
+* _(Wait for "socket.io ..." and then press enter)_
 * cd ../teamboard-client-react
 * gulp
-* (Ready after "Finished 'default' after ...")
+* _(Ready after "Finished 'default' after ...")_
 
 
 After these commands you should have contriboard up and running on localhost:8000 and adminpanel on localhost:8001
