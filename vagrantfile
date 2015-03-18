@@ -1,0 +1,24 @@
+VAGRANT_API_VERSION = "2"
+
+Vagrant.configure(VAGRANT_API_VERSION) do |config|
+	config.vm.box = "ubuntu/trusty64"
+
+	config.vm.provider "virtualbox" do |v|
+		v.cpus   = 2
+		v.memory = 1024
+	end
+
+	config.vm.provision :shell, :path => "bootstrap.sh"
+
+	config.vm.network "forwarded_port", guest: 8000,  host:  8000
+	config.vm.network "forwarded_port", guest: 9001,  host:  9001
+	config.vm.network "forwarded_port", guest: 9002,  host:  9002
+	config.vm.network "forwarded_port", guest: 35729, host: 35729
+	config.vm.network "forwarded_port", guest: 8001,  host:  80
+
+	config.vm.synced_folder "io",           "/home/vagrant/teamboard-io"
+	config.vm.synced_folder "api",          "/home/vagrant/teamboard-api"
+	config.vm.synced_folder "client",       "/home/vagrant/teamboard-client"
+	config.vm.synced_folder "client-react", "/home/vagrant/teamboard-client-react"
+	config.vm.synced_folder "adminpanel",   "/var/www/html"
+end
