@@ -9,6 +9,7 @@ $db = $mongo->selectDB('teamboard-dev');
 $collection = $db->selectCollection('users');
 $users = $collection->find();
 
+echo '<h1>List of registered users:</h1>';
 echo '<ul>';
 foreach ($users as $user) {
     echo '<li>'.$user['email'].'</li>';
