@@ -1,5 +1,5 @@
-io/
-api/
-client/
-client-react/
-.vagrant/
+/io/
+/api/
+/client/
+/client-react/
+/.vagrant/
