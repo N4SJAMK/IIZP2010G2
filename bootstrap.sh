@@ -34,6 +34,7 @@ sed -i 's|DocumentRoot /var/www/html|DocumentRoot /home/vagrant/teamboard-adminp
 sed -i 's|Directory /var/www/|Directory /home/vagrant/teamboard-adminpanel/|g' /etc/apache2/apache2.conf
 sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 
+
 a2enmod rewrite
 
 service apache2 restart
