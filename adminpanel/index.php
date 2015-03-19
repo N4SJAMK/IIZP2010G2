@@ -1,19 +1,22 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 
-$mongo = new MongoClient();
-$db = $mongo->selectDB('teamboard-dev');
+// simple test for rest api
 
 
-$collection = $db->selectCollection('users');
-$users = $collection->find();
 
-echo '<h1>List of registered users:</h1>';
-echo '<ul>';
-foreach ($users as $user) {
-    echo '<li>'.$user['email'].'</li>';
-}
-echo '</ul>';
+echo '<h3>All users:</h3>';
+echo file_get_contents('http://localhost:8001/api/users');
+
+
+
+echo '<h3>All boards:</h3>';
+echo file_get_contents('http://localhost:8001/api/boards');
+
+
+
+echo '<h3>All tickets:</h3>';
+echo file_get_contents('http://localhost:8001/api/tickets');
+
+
 
 

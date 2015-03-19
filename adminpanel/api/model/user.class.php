@@ -1,7 +1,7 @@
 <?php
 
 
-class user {
+class model_user {
 	
 	private $_id;
 	private $_email;
