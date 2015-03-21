@@ -27,7 +27,7 @@ final class controller_users extends core_controller
         
         
         
-        public function post($id = null)
+        public function post()
         {
             
         }

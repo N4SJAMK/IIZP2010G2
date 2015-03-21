@@ -58,7 +58,11 @@ final class core_router
             if (!is_null($this->_controller)) {
                 $controller = 'controller_'.$this->_controller;
                 $controller = new $controller();
-                $controller->$http_method($this->_id);
+                if ($http_method == 'post') {
+                    $controller->$http_method();
+                } else {
+                    $controller->$http_method($this->_id);
+                }
             }
             
         }
