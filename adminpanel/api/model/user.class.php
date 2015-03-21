@@ -6,10 +6,11 @@
 // model class always starts with model_ 
 class model_user {
     
-	private $_id;
-	private $_email;
-	private $_password;
-	private $_token;
+	public $_id;
+	public $_email;
+	public $_password;
+	public $_token;
+	public $_boards;
 	
 	
     // constructor takes params-array that holds key/value-pairs for private variables.
@@ -21,41 +22,7 @@ class model_user {
 		$this->_email = isset($params['email']) ? $params['email'] : null;
 		$this->_password = isset($params['password']) ? $params['password'] : null;
 		$this->_token = isset($params['token']) ? $params['token'] : null;
-	
-	}
-	
-	
-	public function getId ()
-	{
-		return $this->_id;
-	}
-
-	public function getEmail() {
-		return $this->_email;
-	}
-	
-	public function getPassword() {
-		return $this->_password;
-	}
-	
-	public function getToken() {
-		return $this->_token;
-	}
-	
-	public function setId($id) {
-		$this->_id = $id;
-	}
-	
-	public function setEmail($email) {
-		$this->_email = $email;
-	}
-	
-	public function setPassword($password) {
-		$this->_password = $password;
-	}
-	
-	public function setToken($token) {
-		$this->_token = $token;
+		$this->_boards = isset($params['boards']) ? $params['boards'] : array();
 	}
 	
 }
