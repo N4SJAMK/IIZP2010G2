@@ -1,7 +1,6 @@
 <?php
-require_once("model.class.php");
 
-class model_board extends model {
+class model_board extends model_model {
 	
 	public $id = null;
 	public $accessCode = null;

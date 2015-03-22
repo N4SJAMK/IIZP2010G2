@@ -1,7 +1,6 @@
 <?php
-require_once("model.class.php");
 
-class model_ticket extends model {
+class model_ticket extends model_model {
 	
 	public $id = null;
 	public $boardId = null;

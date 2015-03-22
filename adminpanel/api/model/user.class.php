@@ -1,8 +1,7 @@
 <?php
-require_once("model.class.php");
 
 // model class always starts with model_ 
-class model_user extends model {
+class model_user extends model_model {
     
 	public $id = null;
 	public $email = null;
