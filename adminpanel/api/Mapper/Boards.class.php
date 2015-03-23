@@ -8,11 +8,22 @@ final class Boards extends \api\Mapper\BaseMapper
     
     
     
-    
         public function get($id = null)
         {
-            $collection = $this->db->selectCollection('boards');
-            $boards = $collection->find();
+			return is_null($id) ? $this->getAll() : $this->getById($id);
+        }
+		
+		
+		public function getById($id)
+		{
+		
+		
+		}
+		
+		
+		public function getAll()
+		{
+            $boards = $this->collection->find();
             
             $temp = array();
             
@@ -21,8 +32,7 @@ final class Boards extends \api\Mapper\BaseMapper
             }
             
             return $temp;
-            
-        }
+		}
         
         
         
