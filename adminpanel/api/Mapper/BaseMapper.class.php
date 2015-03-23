@@ -9,6 +9,7 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
     
     protected $mongo;
     protected $db;
+	protected $collection;
     
     
     
