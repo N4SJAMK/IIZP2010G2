@@ -5,52 +5,45 @@ namespace api\Mapper;
 
 final class Users extends \api\Mapper\BaseMapper
 {
-    
-    
-    
-    
-        public function get($id = null)
-        {
-            $collection = $this->db->selectCollection('users');
-            $users = $collection->find();
-            
-            $temp = array();
-            
-            foreach ($users as $user) {
-                $temp[] = $user['email'];
-            }
-			
-            return $temp;
-            
-        }
-        
-        
-        
-        
-        public function post()
-        {
-            
-        }
-        
-        
-        
-        
-        public function put($id = null)
-        {
-            
-        }
-        
-        
-        
-        
-        public function delete($id = null)
-        {
-            
-        }
-        
-        
-        
-        
+
+
+
+	protected function _create ($user)
+	{
+		$boardsMapper = new \api\Mapper\Boards();
+		
+		return new \api\Model\User( array(
+				'id'         => (string)$user['_id'],
+				'email'  	 => $user['email'],
+				'password'   => $user['password'],
+				'token'      => $user['token'],
+				'boards'	 => $boardsMapper->getAllBy('createdBy', $user['_id'])
+			));
+	}
+	
+	
+	
+	public function post()
+	{
+		
+	}
+	
+	
+	
+	public function put($id = null)
+	{
+		
+	}
+	
+	
+	
+	public function delete($id = null)
+	{
+		
+	}
+	
+	
+	
 }
 
 

@@ -13,13 +13,13 @@ final class router
     
         'get' => array (
             'users'             =>  'Users',
-            'users/([0-9]+)'    =>  'Users',
+            'users/(.+)'    =>  'Users',
             'boards'            =>  'Boards',
-            'boards/([0-9]+)'   =>  'Boards',
+            'boards/(.+)'   =>  'Boards',
             'tickets'           =>  'Tickets',
-            'tickets/([0-9]+)'  =>  'Tickets',
+            'tickets/(.+)'  =>  'Tickets',
 			'events'			=>	'Events',
-            'events/([0-9]+)'   =>  'Events'
+            'events/(.+)'   =>  'Events'
         ),
         
         'post' => array (
@@ -30,17 +30,17 @@ final class router
         ),
         
         'put' => array (
-            'users/([0-9]+)'    =>  'Users',
-            'boards/([0-9]+)'   =>  'Boards',
-            'tickets/([0-9]+)'  =>  'Tickets',
-            'events/([0-9]+)'   =>  'Events'
+            'users/(.+)'    =>  'Users',
+            'boards/(.+)'   =>  'Boards',
+            'tickets/(.+)'  =>  'Tickets',
+            'events/(.+)'   =>  'Events'
         ),
         
         'delete' => array (
-            'users/([0-9]+)'    =>  'Users',
-            'boards/([0-9]+)'   =>  'Boards',
-            'tickets/([0-9]+)'  =>  'Tickets',
-            'events/([0-9]+)'   =>  'Events'
+            'users/(.+)'    =>  'Users',
+            'boards/(.+)'   =>  'Boards',
+            'tickets/(.+)'  =>  'Tickets',
+            'events/(.+)'   =>  'Events'
         )
     );
     
