@@ -8,8 +8,7 @@ class Board extends \api\Model\BaseModel {
 	public $background = 'none';
 	public $createdBy = null;
 	public $name = '';
-	public $height = null;
-	public $width = null;
+	public $size = array ('height' => null, 'width' => null);
 	public $tickets = array();
 
 	
