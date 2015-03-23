@@ -19,7 +19,7 @@ final class Users extends \api\Mapper\BaseMapper
             foreach ($users as $user) {
                 $temp[] = $user['email'];
             }
-            
+			
             return $temp;
             
         }

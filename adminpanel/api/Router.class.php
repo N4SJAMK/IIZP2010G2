@@ -50,9 +50,14 @@ final class router
     
     
     
-    function __construct ($path = null)
+    function __construct ()
     {
-        
+    }
+	
+	
+	
+	public function getResponse ($path = null)
+	{
         $http_method = strtolower(filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_UNSAFE_RAW));
         
         // jos pyynti metodi on oikea
@@ -64,18 +69,17 @@ final class router
                 $controller = '\api\Mapper\\'.$this->_controller;
                 $controller = new $controller();
 				$response = ($http_method == 'post') ? $controller->$http_method() : $controller->$http_method($this->_id);
+				
 				return $response;
             }
             
         }
 		
 		return null;
-        
     }
-    
-    
-    
-    
+	
+	
+	
     private function _parseController ($path, $http_method)
     {
         // poistetaan viimeinen keno jos sellainen on

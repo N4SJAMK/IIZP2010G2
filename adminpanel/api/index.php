@@ -20,7 +20,8 @@ spl_autoload_register(
 
 unset($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV);
 
-$response = new \api\Router(filter_input(INPUT_GET, 'path', FILTER_SANITIZE_URL));
+$router = new \api\Router();
+$response = $router->getResponse(filter_input(INPUT_GET, 'path', FILTER_SANITIZE_URL));
 
 echo json_encode($response);
 
