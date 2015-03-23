@@ -12,8 +12,7 @@ mb_internal_encoding('UTF-8');
 
 spl_autoload_register(
     function($class) {
-        $filename = str_replace('_', DIRECTORY_SEPARATOR, $class).'.class.php';
-        include_once $filename;
+        include_once '..'.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.class.php';
     }
 );
 
@@ -21,5 +20,6 @@ spl_autoload_register(
 
 unset($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV);
 
-new core_router(filter_input(INPUT_GET, 'path', FILTER_SANITIZE_URL));
+new \api\Router(filter_input(INPUT_GET, 'path', FILTER_SANITIZE_URL));
+
 

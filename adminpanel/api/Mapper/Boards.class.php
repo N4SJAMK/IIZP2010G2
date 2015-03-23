@@ -1,9 +1,9 @@
 <?php
+namespace api\Mapper;
 
 
 
-
-final class controller_boards extends core_controller
+final class Board extends \api\Mapper\Mapper
 {
     
     

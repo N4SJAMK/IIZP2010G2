@@ -3,7 +3,7 @@ namespace api\Mapper;
 
 
 
-final class User extends \api\Mapper\Mapper
+final class Event extends \api\Mapper\Mapper
 {
     
     
@@ -11,16 +11,6 @@ final class User extends \api\Mapper\Mapper
     
         public function get($id = null)
         {
-            $collection = $this->db->selectCollection('users');
-            $users = $collection->find();
-            
-            $temp = array();
-            
-            foreach ($users as $user) {
-                $temp[] = $user['email'];
-            }
-            
-            echo json_encode($temp);
             
         }
         

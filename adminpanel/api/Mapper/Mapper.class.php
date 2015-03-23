@@ -1,9 +1,9 @@
 <?php
+namespace api\Mapper;
 
 
 
-
-abstract class core_controller implements interface_controller
+abstract class Mapper implements \api\Interfaces\Mapper
 {
     
     
@@ -15,7 +15,7 @@ abstract class core_controller implements interface_controller
     
     function __construct ()
     {
-        $this->mongo = new MongoClient();
+        $this->mongo = new \MongoClient();
         $this->db = $this->mongo->selectDB('teamboard-dev');
     }
     

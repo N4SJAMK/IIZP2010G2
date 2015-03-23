@@ -1,9 +1,9 @@
 <?php
+namespace api\Interfaces;
 
 
 
-
-interface interface_controller
+interface Mapper
 {
     
         public function get($id);

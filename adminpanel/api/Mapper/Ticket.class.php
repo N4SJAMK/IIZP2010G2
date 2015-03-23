@@ -1,9 +1,9 @@
 <?php
+namespace api\Mapper;
 
 
 
-
-final class controller_tickets extends core_controller
+final class Ticket extends \api\Mapper\Mapper
 {
     
     

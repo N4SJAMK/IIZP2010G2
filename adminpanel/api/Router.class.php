@@ -1,9 +1,9 @@
 <?php
+namespace api;
 
 
 
-
-final class core_router
+final class router
 {
     
     
@@ -12,30 +12,35 @@ final class core_router
     private $_paths = array (
     
         'get' => array (
-            'users'             =>  'users',
-            'users/([0-9]+)'    =>  'users',
-            'boards'            =>  'boards',
-            'boards/([0-9]+)'   =>  'boards',
-            'tickets'           =>  'tickets',
-            'tickets/([0-9]+)'  =>  'tickets'
+            'users'             =>  'User',
+            'users/([0-9]+)'    =>  'User',
+            'boards'            =>  'Board',
+            'boards/([0-9]+)'   =>  'Board',
+            'tickets'           =>  'Ticket',
+            'tickets/([0-9]+)'  =>  'Ticket',
+			'events'			=>	'Event',
+            'events/([0-9]+)'   =>  'Event'
         ),
         
         'post' => array (
-            'users'             =>  'users',
-            'boards'            =>  'boards',
-            'tickets'           =>  'tickets'
+            'users'             =>  'User',
+            'boards'            =>  'Board',
+            'tickets'           =>  'Ticket',
+			'events'			=>	'Event'
         ),
         
         'put' => array (
-            'users/([0-9]+)'    =>  'users',
-            'boards/([0-9]+)'   =>  'boards',
-            'tickets/([0-9]+)'  =>  'tickets'
+            'users/([0-9]+)'    =>  'User',
+            'boards/([0-9]+)'   =>  'Board',
+            'tickets/([0-9]+)'  =>  'Ticket',
+            'events/([0-9]+)'   =>  'Event'
         ),
         
         'delete' => array (
-            'users/([0-9]+)'    =>  'users',
-            'boards/([0-9]+)'   =>  'boards',
-            'tickets/([0-9]+)'  =>  'tickets'
+            'users/([0-9]+)'    =>  'User',
+            'boards/([0-9]+)'   =>  'Board',
+            'tickets/([0-9]+)'  =>  'Ticket',
+            'events/([0-9]+)'   =>  'Event'
         )
     );
     
@@ -56,7 +61,7 @@ final class core_router
             $this->_parseController($path, $http_method);
             
             if (!is_null($this->_controller)) {
-                $controller = 'controller_'.$this->_controller;
+                $controller = '\api\Mapper\\'.$this->_controller;
                 $controller = new $controller();
                 if ($http_method == 'post') {
                     $controller->$http_method();
