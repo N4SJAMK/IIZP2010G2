@@ -1,7 +1,7 @@
 <?php
-namespace api/model;
+namespace api/Model;
 
-class model {
+abstract class BaseModel {
 	
 	// constructor takes params-array that holds key/value-pairs for private variables.
     // array key == instance variable key

@@ -1,8 +1,8 @@
 <?php
-namespace api/model;
+namespace api/Model;
 
 // model class always starts with model_ 
-class user extends api/model/model {
+class User extends api/Model/BaseModel {
     
 	public $id = null;
 	public $email = null;
@@ -13,4 +13,3 @@ class user extends api/model/model {
 }
 
 
-$user = new user(array('id' => 1, 'email' => "matti@mieskolainen.fi"));

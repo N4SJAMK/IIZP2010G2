@@ -1,7 +1,7 @@
 <?php
-namespace api/model;
+namespace api/Model;
 
-class ticket extends api/model/model {
+class Ticket extends api/Model/BaseModel {
 	
 	public $id = null;
 	public $boardId = null;
