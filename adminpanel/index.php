@@ -19,27 +19,27 @@ echo '<ul>';
 foreach ($users as $user) {
     echo '
         <li>
-            <form method="post" action="api/users/'.$user->_id.'">
+            <form method="post" action="api/users/'.$user->id.'">
                 <input type="hidden" name="REQUEST_METHOD" value="delete">
                 <input type="submit" value="Poista">
                 <span>'.$user->email.'</span>
             </form>
             <ul>
         ';
-        foreach ($user->__boards as $board) {
+        foreach ($user->boards as $board) {
             echo '
                 <li>
-                    <form method="post" action="api/boards/'.$board->_id.'">
+                    <form method="post" action="api/boards/'.$board->id.'">
                         <input type="hidden" name="REQUEST_METHOD" value="delete">
                         <input type="submit" value="Poista">
                         <span>'.(empty($board->name) ? '{null}' : $board->name).'</span>
                     </form>
                     <ul>
                 ';
-                    foreach ($board->__tickets as $ticket) {
+                    foreach ($board->tickets as $ticket) {
                         echo '
                             <li>
-                            <form method="post" action="api/tickets/'.$ticket->_id.'">
+                            <form method="post" action="api/tickets/'.$ticket->id.'">
                                 <input type="hidden" name="REQUEST_METHOD" value="delete">
                                 <input type="submit" value="Poista">
                                 <span>'.(empty($ticket->content) ? '{null}' : $ticket->content).'</span>
@@ -59,4 +59,5 @@ foreach ($users as $user) {
 }
 echo '</ul>';
 
-
+echo '<h3>Events</h3>';
+print_r(json_decode(file_get_contents('http://localhost:8001/api/events')));
