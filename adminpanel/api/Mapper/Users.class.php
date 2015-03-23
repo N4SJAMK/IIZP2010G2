@@ -3,7 +3,7 @@ namespace api\Mapper;
 
 
 
-final class User extends \api\Mapper\Mapper
+final class Users extends \api\Mapper\BaseMapper
 {
     
     

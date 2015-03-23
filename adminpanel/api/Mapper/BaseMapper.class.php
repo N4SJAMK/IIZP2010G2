@@ -3,7 +3,7 @@ namespace api\Mapper;
 
 
 
-abstract class Mapper implements \api\Interfaces\Mapper
+abstract class BaseMapper implements \api\Interfaces\Mapper
 {
     
     

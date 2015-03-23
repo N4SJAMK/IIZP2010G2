@@ -3,7 +3,7 @@ namespace api\Mapper;
 
 
 
-final class Board extends \api\Mapper\Mapper
+final class Boards extends \api\Mapper\BaseMapper
 {
     
     

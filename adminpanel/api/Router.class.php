@@ -12,35 +12,35 @@ final class router
     private $_paths = array (
     
         'get' => array (
-            'users'             =>  'User',
-            'users/([0-9]+)'    =>  'User',
-            'boards'            =>  'Board',
-            'boards/([0-9]+)'   =>  'Board',
-            'tickets'           =>  'Ticket',
-            'tickets/([0-9]+)'  =>  'Ticket',
-			'events'			=>	'Event',
-            'events/([0-9]+)'   =>  'Event'
+            'users'             =>  'Users',
+            'users/([0-9]+)'    =>  'Users',
+            'boards'            =>  'Boards',
+            'boards/([0-9]+)'   =>  'Boards',
+            'tickets'           =>  'Tickets',
+            'tickets/([0-9]+)'  =>  'Tickets',
+			'events'			=>	'Events',
+            'events/([0-9]+)'   =>  'Events'
         ),
         
         'post' => array (
-            'users'             =>  'User',
-            'boards'            =>  'Board',
-            'tickets'           =>  'Ticket',
-			'events'			=>	'Event'
+            'users'             =>  'Users',
+            'boards'            =>  'Boards',
+            'tickets'           =>  'Tickets',
+			'events'			=>	'Events'
         ),
         
         'put' => array (
-            'users/([0-9]+)'    =>  'User',
-            'boards/([0-9]+)'   =>  'Board',
-            'tickets/([0-9]+)'  =>  'Ticket',
-            'events/([0-9]+)'   =>  'Event'
+            'users/([0-9]+)'    =>  'Users',
+            'boards/([0-9]+)'   =>  'Boards',
+            'tickets/([0-9]+)'  =>  'Tickets',
+            'events/([0-9]+)'   =>  'Events'
         ),
         
         'delete' => array (
-            'users/([0-9]+)'    =>  'User',
-            'boards/([0-9]+)'   =>  'Board',
-            'tickets/([0-9]+)'  =>  'Ticket',
-            'events/([0-9]+)'   =>  'Event'
+            'users/([0-9]+)'    =>  'Users',
+            'boards/([0-9]+)'   =>  'Boards',
+            'tickets/([0-9]+)'  =>  'Tickets',
+            'events/([0-9]+)'   =>  'Events'
         )
     );
     

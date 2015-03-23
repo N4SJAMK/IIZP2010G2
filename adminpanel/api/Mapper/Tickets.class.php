@@ -3,7 +3,7 @@ namespace api\Mapper;
 
 
 
-final class Ticket extends \api\Mapper\Mapper
+final class Tickets extends \api\Mapper\BaseMapper
 {
     
     

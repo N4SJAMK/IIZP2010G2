@@ -3,7 +3,7 @@ namespace api\Mapper;
 
 
 
-final class Event extends \api\Mapper\Mapper
+final class Events extends \api\Mapper\BaseMapper
 {
     
     
