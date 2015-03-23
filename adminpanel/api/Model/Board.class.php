@@ -1,7 +1,7 @@
 <?php
-namespace api/Model;
+namespace api\Model;
 
-class Board extends api/Model/BaseModel {
+class Board extends \api\Model\BaseModel {
 	
 	public $id = null;
 	public $accessCode = null;

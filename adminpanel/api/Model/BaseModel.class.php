@@ -1,5 +1,5 @@
 <?php
-namespace api/Model;
+namespace api\Model;
 
 abstract class BaseModel {
 	

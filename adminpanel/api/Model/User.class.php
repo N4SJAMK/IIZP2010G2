@@ -1,8 +1,8 @@
 <?php
-namespace api/Model;
+namespace api\Model;
 
 // model class always starts with model_ 
-class User extends api/Model/BaseModel {
+class User extends \api\Model\BaseModel {
     
 	public $id = null;
 	public $email = null;
