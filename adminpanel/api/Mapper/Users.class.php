@@ -20,7 +20,7 @@ final class Users extends \api\Mapper\BaseMapper
                 $temp[] = $user['email'];
             }
             
-            echo json_encode($temp);
+            return $temp;
             
         }
         

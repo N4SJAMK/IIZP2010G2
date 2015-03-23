@@ -20,7 +20,7 @@ final class Tickets extends \api\Mapper\BaseMapper
                 $temp[] = empty($ticket['content']) ? null : $ticket['content'];
             }
             
-            echo json_encode($temp);
+            return $temp;
             
         }
         

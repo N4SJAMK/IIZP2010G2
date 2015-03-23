@@ -20,7 +20,7 @@ final class Boards extends \api\Mapper\BaseMapper
                 $temp[] = empty($board['name']) ? null : $board['name'];
             }
             
-            echo json_encode($temp);
+            return $temp;
             
         }
         
