@@ -72,6 +72,9 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
     private function _deleteRecursive ($query)
     {
         $object = $this->getOne($query);
+        if (is_null($object)) {
+            return false;
+        }
         $properties = get_object_vars($object);
         foreach ($properties as $key => $value)
         {
