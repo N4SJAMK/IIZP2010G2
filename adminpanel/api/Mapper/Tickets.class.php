@@ -39,13 +39,6 @@ final class Tickets extends \api\Mapper\BaseMapper
 	
 	
 	
-	public function delete($id = null)
-	{
-		
-	}
-	
-	
-	
 }
 
 

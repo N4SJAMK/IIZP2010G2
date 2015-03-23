@@ -26,50 +26,47 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
     
     
     
-	public function get($id = null)
+    
+	public function get ($id = null)
 	{
-		return is_null($id) ? $this->getAll() : $this->getBy('_id', new \MongoId($id));
+		return is_null($id) ? $this->getAll() : $this->getOne(array('_id' => new \MongoId($id)));
 	}
     
-    
-    
-	public function getBy($column, $data)
+	public function getOne ($query = array())
 	{
-		$result = $this->collection->findOne( array(
-				$column => $data
-			));
-			
-		return $this->_create($result);
+		$result = $this->collection->findOne($query);
+		return is_null($result) ? null : $this->_create($result);
 	}
     
-    
-    
-	public function getAllBy($column, $data)
+	public function getAll ($query = array())
 	{
-		$results = $this->collection->find( array(
-				$column => $data
-			));
-			
-		$temp = array();
+		$results = $this->collection->find($query);
+		$return = array();
 		foreach ($results as $result) {
-			$temp[] = $this->_create($result);
+			$return[] = $this->_create($result);
 		}
-		return $temp;
-		
+		return $return;
 	}
     
+	
     
     
-	public function getAll()
+    
+	public function delete ($id = null)
 	{
-		$results = $this->collection->find();
-		
-		$temp = array();
-		foreach ($results as $result) {
-			$temp[] = $this->_create($result);
-		}
-		return $temp;
+		return is_null($id) ? $this->deleteAll() : $this->deleteOne(array('_id' => new \MongoId($id)));
 	}
+    
+    public function deleteOne ($query = array())
+    {
+        return $this->collection->remove($query, array('justOne' => true));
+    }
+    
+    public function deleteAll ($query = array())
+    {
+        return $this->collection->remove($query);
+    }
+    
     
     
     

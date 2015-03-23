@@ -22,7 +22,7 @@ final class Boards extends \api\Mapper\BaseMapper
 					'height' => intval($board['size']['height']), 
 					'width'  => intval($board['size']['width'])
 					),
-				'__tickets'	 => $ticketsMapper->getAllBy('board', $board['_id'])
+				'__tickets'	 => $ticketsMapper->getAll(array('board' => $board['_id']))
 				));
 	
 	}
@@ -42,13 +42,6 @@ final class Boards extends \api\Mapper\BaseMapper
 	}
 	
 	
-	
-	public function delete($id = null)
-	{
-		
-	}
-
-
 	
 }
 

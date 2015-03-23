@@ -72,9 +72,7 @@ final class router
             if (!is_null($this->_controller)) {
                 $controller = '\api\Mapper\\'.$this->_controller;
                 $controller = new $controller();
-				$response = ($http_method == 'post') ? $controller->$http_method() : $controller->$http_method($this->_id);
-				
-				return $response;
+				return $controller->$http_method($this->_id);
             }
             
         }

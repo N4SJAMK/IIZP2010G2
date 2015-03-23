@@ -17,7 +17,7 @@ final class Users extends \api\Mapper\BaseMapper
 				'email'  	 => $user['email'],
 				'password'   => $user['password'],
 				'token'      => $user['token'],
-				'__boards'	 => $boardsMapper->getAllBy('createdBy', $user['_id'])
+				'__boards'	 => $boardsMapper->getAll(array('createdBy' => $user['_id']))
 			));
 	}
 	
@@ -35,12 +35,6 @@ final class Users extends \api\Mapper\BaseMapper
 		
 	}
 	
-	
-	
-	public function delete($id = null)
-	{
-		
-	}
 	
 	
 	
