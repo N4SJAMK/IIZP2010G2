@@ -8,50 +8,39 @@ final class Router
     
     
     
-    
-    private $_paths = array (
-    
-        'get' => array (
-            'users'                     => 'users',
-            'users/([0-9a-fA-F]{24})'   => 'users',
-            'boards'                    => 'boards',
-            'boards/([0-9a-fA-F]{24})'  => 'boards',
-            'tickets'                   => 'tickets',
-            'tickets/([0-9a-fA-F]{24})' => 'tickets',
-			'events'                    => 'events'
+    private 
+        $_paths = array (
+            'get' => array (
+                'users'                     => 'users',
+                'users/([0-9a-fA-F]{24})'   => 'users',
+                'boards'                    => 'boards',
+                'boards/([0-9a-fA-F]{24})'  => 'boards',
+                'tickets'                   => 'tickets',
+                'tickets/([0-9a-fA-F]{24})' => 'tickets',
+                'events'                    => 'events'
+                ),
+            'post' => array (
+                'users'   => 'users',
+                'boards'  => 'boards',
+                'tickets' => 'tickets'
+                ),
+            'put' => array (
+                'users/([0-9a-fA-F]{24})'   => 'users',
+                'boards/([0-9a-fA-F]{24})'  => 'boards',
+                'tickets/([0-9a-fA-F]{24})' => 'tickets'
+                ),
+            'delete' => array (
+                'users/([0-9a-fA-F]{24})'   => 'users',
+                'boards/([0-9a-fA-F]{24})'  => 'boards',
+                'tickets/([0-9a-fA-F]{24})' => 'tickets'
+            )
         ),
-        
-        'post' => array (
-            'users'   => 'users',
-            'boards'  => 'boards',
-            'tickets' => 'tickets'
-        ),
-        
-        'put' => array (
-            'users/([0-9a-fA-F]{24})'   => 'users',
-            'boards/([0-9a-fA-F]{24})'  => 'boards',
-            'tickets/([0-9a-fA-F]{24})' => 'tickets'
-        ),
-        
-        'delete' => array (
-            'users/([0-9a-fA-F]{24})'   => 'users',
-            'boards/([0-9a-fA-F]{24})'  => 'boards',
-            'tickets/([0-9a-fA-F]{24})' => 'tickets'
-        )
-    );
-    
-    private $_controller = null;
-    private $_id = null;
+        $_controller = null,
+        $_id = null;
     
     
     
     
-    function __construct ()
-    {
-    }
-	
-	
-	
 	public function getResponse ($path = null)
 	{
         // input_post for html form fallback
@@ -74,9 +63,10 @@ final class Router
 		
 		return null;
     }
-	
-	
-	
+    
+    
+    
+    
     private function _parseController ($path, $http_method)
     {
         // poistetaan viimeinen keno jos sellainen on
@@ -93,9 +83,7 @@ final class Router
                 $this->_id = isset($tempmatches[1]) ? $tempmatches[1] : null;
                 break;
             }
-            
         }
-        
         
     }
     
@@ -103,7 +91,3 @@ final class Router
     
     
 }
-
-
-
-

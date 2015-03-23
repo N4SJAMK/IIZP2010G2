@@ -15,40 +15,41 @@ final class Mapper
     
     
     
+    
     function __construct ($collection)
     {
         $this->mongo = new \MongoClient();
         $this->db = $this->mongo->selectDB('teamboard-dev');
-		$this->collection = $this->db->selectCollection($collection);
+        $this->collection = $this->db->selectCollection($collection);
     }
+    
     
     
     
     // GETS
-	public function get ($id = null)
-	{
-		return is_null($id) ? $this->_get(array()) : current($this->_get(array('_id' => new \MongoId($id))));
-	}
+    public function get ($id = null)
+    {
+        return is_null($id) ? $this->_get(array()) : current($this->_get(array('_id' => new \MongoId($id))));
+    }
     
     private function _get ($query)
     {
-		$results = $this->collection->find($query);
-		$return = array();
-		foreach ($results as $result) {
+        $results = $this->collection->find($query);
+        $return = array();
+        foreach ($results as $result) {
             $return[] = $this->_createObject($result);
-		}
-		return $return;
+        }
+        return $return;
     }
     
     
-	
     
     
     // DELETES
-	public function delete ($id = null)
-	{
-		return is_null($id) ? $this->_delete(array()) : $this->_delete(array('_id' => new \MongoId($id)), array('justOne' => true));
-	}
+    public function delete ($id = null)
+    {
+        return is_null($id) ? $this->_delete(array()) : $this->_delete(array('_id' => new \MongoId($id)), array('justOne' => true));
+    }
     
     private function _delete ($query, $options = array())
     {
@@ -82,16 +83,16 @@ final class Mapper
     
     
     
-    
     public function put ($id = null)
     {
-        
-    }
-    public function post ($id = null)
-    {
-        
     }
     
+    
+    
+    
+    public function post ($id = null)
+    {
+    }
     
     
     
@@ -132,8 +133,5 @@ final class Mapper
     
     
     
+    
 }
-
-
-
-
