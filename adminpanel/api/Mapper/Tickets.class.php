@@ -12,7 +12,7 @@ final class Tickets extends \api\Mapper\BaseMapper
 	{
 		return new \api\Model\Ticket( array(
 			'_id'       => (string)$ticket['_id'],
-			'board'     => (string)$ticket['board'],
+			'_board'     => (string)$ticket['board'],
 			'position'  => array(
 				'z'  => intval($ticket['position']['z']), 
 				'x'  => intval($ticket['position']['x']),

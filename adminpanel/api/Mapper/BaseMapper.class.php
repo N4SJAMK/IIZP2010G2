@@ -7,7 +7,7 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
 {
     
     
-	
+    
     protected $mongo;
     protected $db;
 	protected $collection;
@@ -23,16 +23,16 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
 		$collectionName = end($classNameArray);
 		$this->collection = $this->db->selectCollection($collectionName);
     }
-	
-	
-	
+    
+    
+    
 	public function get($id = null)
 	{
 		return is_null($id) ? $this->getAll() : $this->getBy('_id', new \MongoId($id));
 	}
     
     
-	
+    
 	public function getBy($column, $data)
 	{
 		$result = $this->collection->findOne( array(
@@ -43,7 +43,7 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
 	}
     
     
-	
+    
 	public function getAllBy($column, $data)
 	{
 		$results = $this->collection->find( array(
@@ -57,9 +57,9 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
 		return $temp;
 		
 	}
-	
-	
-	
+    
+    
+    
 	public function getAll()
 	{
 		$results = $this->collection->find();
@@ -71,8 +71,8 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
 		return $temp;
 	}
     
-	
-	
+    
+    
 }
 
 

@@ -8,7 +8,7 @@ final class Board extends \api\Model\BaseModel {
         $_id        = null,
         $accessCode = null,
         $background = 'none',
-        $createdBy  = null,
+        $_createdBy = null,
         $name       = '',
         $size       = array (
                         'height' => 0,
