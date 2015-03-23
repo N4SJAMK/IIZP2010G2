@@ -24,13 +24,26 @@ final class Boards extends \api\Mapper\BaseMapper
 		public function getAll()
 		{
             $boards = $this->collection->find();
-            
+            $ticketMapper = new \api\Mapper\Tickets();
+			
             $temp = array();
-            
             foreach ($boards as $board) {
-                $temp[] = empty($board['name']) ? null : $board['name'];
+			print_r($board);
+				$temp[] = new \api\Model\Board( array(
+					'id'         => $board['_id'],
+					'createdBy'  => $board['createdBy'],
+					'accessCode' => $board['accessCode'],
+					'background' => $board['background'],
+					'size'       => array(
+						'height' => $board['size']['height'], 
+						'width'  => $board['size']['width']
+						),
+					'name'       => $board['name'],
+					'tickets'	 => $ticketMapper->getByBoardId($board['_id'])
+					));
             }
-            
+			print_r($temp);
+			
             return $temp;
 		}
         
