@@ -12,35 +12,35 @@ final class router
     private $_paths = array (
     
         'get' => array (
-            'users'             =>  'Users',
-            'users/(.+)'    =>  'Users',
-            'boards'            =>  'Boards',
-            'boards/(.+)'   =>  'Boards',
-            'tickets'           =>  'Tickets',
-            'tickets/(.+)'  =>  'Tickets',
-			'events'			=>	'Events',
-            'events/(.+)'   =>  'Events'
+            'users'                     => 'Users',
+            'users/([0-9a-fA-F]{24})'   => 'Users',
+            'boards'                    => 'Boards',
+            'boards/([0-9a-fA-F]{24})'  => 'Boards',
+            'tickets'                   => 'Tickets',
+            'tickets/([0-9a-fA-F]{24})' => 'Tickets',
+			'events'                    => 'Events',
+            'events/([0-9a-fA-F]{24})'  => 'Events'
         ),
         
         'post' => array (
-            'users'             =>  'Users',
-            'boards'            =>  'Boards',
-            'tickets'           =>  'Tickets',
-			'events'			=>	'Events'
+            'users'   => 'Users',
+            'boards'  => 'Boards',
+            'tickets' => 'Tickets',
+			'events'  => 'Events'
         ),
         
         'put' => array (
-            'users/(.+)'    =>  'Users',
-            'boards/(.+)'   =>  'Boards',
-            'tickets/(.+)'  =>  'Tickets',
-            'events/(.+)'   =>  'Events'
+            'users/([0-9a-fA-F]{24})'   => 'Users',
+            'boards/([0-9a-fA-F]{24})'  => 'Boards',
+            'tickets/([0-9a-fA-F]{24})' => 'Tickets',
+            'events/([0-9a-fA-F]{24})'  => 'Events'
         ),
         
         'delete' => array (
-            'users/(.+)'    =>  'Users',
-            'boards/(.+)'   =>  'Boards',
-            'tickets/(.+)'  =>  'Tickets',
-            'events/(.+)'   =>  'Events'
+            'users/([0-9a-fA-F]{24})'   => 'Users',
+            'boards/([0-9a-fA-F]{24})'  => 'Boards',
+            'tickets/([0-9a-fA-F]{24})' => 'Tickets',
+            'events/([0-9a-fA-F]{24})'  => 'Events'
         )
     );
     
@@ -58,7 +58,11 @@ final class router
 	
 	public function getResponse ($path = null)
 	{
-        $http_method = strtolower(filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_UNSAFE_RAW));
+        // input_post for html form fallback
+        $http_method = strtolower(filter_input(INPUT_POST, 'REQUEST_METHOD', FILTER_UNSAFE_RAW));
+        if (empty($http_method)) {
+            $http_method = strtolower(filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_UNSAFE_RAW));
+        }
         
         // jos pyynti metodi on oikea
         if (isset($this->_paths[$http_method])) {
