@@ -14,7 +14,7 @@ final class Tickets extends \api\Mapper\BaseMapper
 			'_id'       => (string)$ticket['_id'],
 			'board'     => (string)$ticket['board'],
 			'position'  => array(
-				'z'  => intval($ticket['position']['z']), 
+				'z'  => isset($ticket['position']['z']) ? intval($ticket['position']['z']) : 0, 
 				'x'  => intval($ticket['position']['x']),
 				'y'  => intval($ticket['position']['y'])
 				),
