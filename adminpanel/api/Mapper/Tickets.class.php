@@ -11,15 +11,15 @@ final class Tickets extends \api\Mapper\BaseMapper
 	protected function _create($ticket)
 	{
 		return new \api\Model\Ticket( array(
-			'id'        => (string)$ticket['_id'],
-			'boardId'	=> (string)$ticket['board'],
-			'color' 	=> $ticket['color'],
-			'content' 	=> $ticket['content'],
+			'_id'       => (string)$ticket['_id'],
+			'board'     => (string)$ticket['board'],
 			'position'  => array(
-				'z'  => $ticket['position']['z'], 
-				'x'  => $ticket['position']['x'], 
-				'y'  => $ticket['position']['y']
-				)
+				'z'  => intval($ticket['position']['z']), 
+				'x'  => intval($ticket['position']['x']),
+				'y'  => intval($ticket['position']['y'])
+				),
+			'color'     => $ticket['color'],
+			'content'   => $ticket['content']
 			));
 	}
 	

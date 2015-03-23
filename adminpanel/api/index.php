@@ -23,5 +23,5 @@ unset($_GET, $_POST, $_COOKIE, $_SERVER, $_ENV);
 $router = new \api\Router();
 $response = $router->getResponse(filter_input(INPUT_GET, 'path', FILTER_SANITIZE_URL));
 
-echo json_encode($response);
+print_r($response);
 

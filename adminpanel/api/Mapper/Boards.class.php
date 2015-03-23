@@ -13,16 +13,16 @@ final class Boards extends \api\Mapper\BaseMapper
 		$ticketsMapper = new \api\Mapper\Tickets();
 		
 		return new \api\Model\Board( array(
-				'id'         => (string)$board['_id'],
-				'createdBy'  => (string)$board['createdBy'],
+				'_id'        => (string)$board['_id'],
 				'accessCode' => $board['accessCode'],
 				'background' => $board['background'],
-				'size'       => array(
-					'height' => $board['size']['height'], 
-					'width'  => $board['size']['width']
-					),
+				'createdBy'  => (string)$board['createdBy'],
 				'name'       => $board['name'],
-				'tickets'	 => $ticketsMapper->getAllBy('board', $board['_id'])
+				'size'       => array(
+					'height' => intval($board['size']['height']), 
+					'width'  => intval($board['size']['width'])
+					),
+				'__tickets'	 => $ticketsMapper->getAllBy('board', $board['_id'])
 				));
 	
 	}

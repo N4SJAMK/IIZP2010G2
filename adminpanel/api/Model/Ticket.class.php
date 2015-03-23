@@ -1,12 +1,18 @@
 <?php
 namespace api\Model;
 
-class Ticket extends \api\Model\BaseModel {
-	
-	public $id = null;
-	public $boardId = null;
-	public $position = array('z' => NULL, 'y' => NULL, 'x' => NULL );
-	public $color = '#FFFFFF';
-	public $content = '';
+
+final class Ticket extends \api\Model\BaseModel {
+    
+    public
+        $_id = null,
+        $board = null,
+        $position = array (
+            'z' => 0,
+            'y' => 0,
+            'x' => 0
+            ),
+        $color = '#FFFFFF',
+        $content = '';
 	
 }

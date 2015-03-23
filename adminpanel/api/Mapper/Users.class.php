@@ -13,11 +13,11 @@ final class Users extends \api\Mapper\BaseMapper
 		$boardsMapper = new \api\Mapper\Boards();
 		
 		return new \api\Model\User( array(
-				'id'         => (string)$user['_id'],
+				'_id'        => (string)$user['_id'],
 				'email'  	 => $user['email'],
 				'password'   => $user['password'],
 				'token'      => $user['token'],
-				'boards'	 => $boardsMapper->getAllBy('createdBy', $user['_id'])
+				'__boards'	 => $boardsMapper->getAllBy('createdBy', $user['_id'])
 			));
 	}
 	
