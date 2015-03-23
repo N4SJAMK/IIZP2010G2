@@ -29,16 +29,16 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
     
 	public function get ($id = null)
 	{
-		return is_null($id) ? $this->getAll() : $this->getOne(array('_id' => new \MongoId($id)));
+		return is_null($id) ? $this->getAll(array()) : $this->getOne(array('_id' => new \MongoId($id)));
 	}
     
-	public function getOne ($query = array())
+	public function getOne ($query)
 	{
 		$result = $this->collection->findOne($query);
 		return is_null($result) ? null : $this->_create($result);
 	}
     
-	public function getAll ($query = array())
+	public function getAll ($query)
 	{
 		$results = $this->collection->find($query);
 		$return = array();
@@ -54,19 +54,37 @@ abstract class BaseMapper implements \api\Interfaces\Mapper
     
 	public function delete ($id = null)
 	{
-		return is_null($id) ? $this->deleteAll() : $this->deleteOne(array('_id' => new \MongoId($id)));
+		return is_null($id) ? $this->deleteAll(array()) : $this->deleteOne(array('_id' => new \MongoId($id)));
 	}
     
-    public function deleteOne ($query = array())
+    public function deleteOne ($query)
     {
+        $this->_deleteRecursive($query);
         return $this->collection->remove($query, array('justOne' => true));
     }
     
-    public function deleteAll ($query = array())
+    public function deleteAll ($query)
     {
+        $this->_deleteRecursive($query);
         return $this->collection->remove($query);
     }
     
+    private function _deleteRecursive ($query)
+    {
+        $object = $this->getOne($query);
+        $properties = get_object_vars($object);
+        foreach ($properties as $key => $value)
+        {
+            if (preg_match('/^__(.+)$/', $key, $matches)) {
+                $subQueryField = ($matches[1] == 'boards') ? 'createdBy' : 'board';
+                
+                $subObjectMapperName = '\api\Mapper\\'.ucfirst($matches[1]);
+                $subObjectMapper = new $subObjectMapperName();
+                $subObjectMapper->deleteAll(array($subQueryField => new \MongoId($object->_id)));
+                
+            }
+        }
+    }
     
     
     

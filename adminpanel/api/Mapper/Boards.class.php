@@ -16,7 +16,7 @@ final class Boards extends \api\Mapper\BaseMapper
 				'_id'        => (string)$board['_id'],
 				'accessCode' => $board['accessCode'],
 				'background' => $board['background'],
-				'_createdBy'  => (string)$board['createdBy'],
+				'createdBy'  => (string)$board['createdBy'],
 				'name'       => $board['name'],
 				'size'       => array(
 					'height' => intval($board['size']['height']), 
