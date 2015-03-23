@@ -1,7 +1,8 @@
 <?php
+namespace api/model;
 
 // model class always starts with model_ 
-class model_user extends model_model {
+class user extends api/model/model {
     
 	public $id = null;
 	public $email = null;
