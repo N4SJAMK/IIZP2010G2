@@ -11,13 +11,13 @@ final class Router
     private 
         $_paths = array (
             'get' => array (
-                'users'                     => 'users',
-                'users/([0-9a-fA-F]{24})'   => 'users',
-                'boards'                    => 'boards',
-                'boards/([0-9a-fA-F]{24})'  => 'boards',
-                'tickets'                   => 'tickets',
-                'tickets/([0-9a-fA-F]{24})' => 'tickets',
-                'events'                    => 'events'
+                'users'                      => 'users',
+                'users\/([0-9a-fA-F]{24})'   => 'users',
+                'boards'                     => 'boards',
+                'boards\/([0-9a-fA-F]{24})'  => 'boards',
+                'tickets'                    => 'tickets',
+                'tickets\/([0-9a-fA-F]{24})' => 'tickets',
+                'events'                     => 'events'
                 ),
             'post' => array (
                 'users'   => 'users',
@@ -25,14 +25,14 @@ final class Router
                 'tickets' => 'tickets'
                 ),
             'put' => array (
-                'users/([0-9a-fA-F]{24})'   => 'users',
-                'boards/([0-9a-fA-F]{24})'  => 'boards',
-                'tickets/([0-9a-fA-F]{24})' => 'tickets'
+                'users\/([0-9a-fA-F]{24})'   => 'users',
+                'boards\/([0-9a-fA-F]{24})'  => 'boards',
+                'tickets\/([0-9a-fA-F]{24})' => 'tickets'
                 ),
             'delete' => array (
-                'users/([0-9a-fA-F]{24})'   => 'users',
-                'boards/([0-9a-fA-F]{24})'  => 'boards',
-                'tickets/([0-9a-fA-F]{24})' => 'tickets'
+                'users\/([0-9a-fA-F]{24})'   => 'users',
+                'boards\/([0-9a-fA-F]{24})'  => 'boards',
+                'tickets\/([0-9a-fA-F]{24})' => 'tickets'
             )
         ),
         $_controller = null,
@@ -78,7 +78,7 @@ final class Router
         // etsitään oikea controlleri
         foreach ($this->_paths[$http_method] as $pattern => $tempcontroller) {
             
-            if (preg_match('/^'.str_replace('/', '\/', $pattern).'$/', $path, $tempmatches)) {
+            if (preg_match('/^'.$pattern.'$/', $path, $tempmatches)) {
                 $this->_controller = $tempcontroller;
                 $this->_id = isset($tempmatches[1]) ? $tempmatches[1] : null;
                 break;
