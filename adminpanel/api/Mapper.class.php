@@ -11,125 +11,153 @@ final class Mapper
     private
         $mongo,
         $db,
-        $collection;
+        $modelFactory;
     
     
     
     
-    function __construct ($collection)
+    function __construct ()
     {
         $this->mongo = new \MongoClient();
         $this->db = $this->mongo->selectDB('teamboard-dev');
-        $this->collection = $this->db->selectCollection($collection);
+        $this->modelFactory = new \api\ModelFactory();
     }
     
     
     
     
     // GETS
-    public function get ($id = null)
+    public function get ($from, $id = null)
     {
-        return is_null($id) ? $this->_get(array()) : current($this->_get(array('_id' => new \MongoId($id))));
+        return is_null($id) ? $this->_get($from, array()) : current($this->_get($from, array('_id' => new \MongoId($id))));
     }
     
-    private function _get ($query)
+    private function _get ($from, $query)
     {
-        $results = $this->collection->find($query);
-        $return = array();
+        $collection = $this->db->selectCollection($from);
+        $results = $collection->find($query);
+        
+        $models = array();
         foreach ($results as $result) {
-            $return[] = $this->_createObject($result);
+            
+            $model = $this->modelFactory->createModel($from, $result);
+            
+            if ($model) {
+                
+                switch ($from) {
+                    // adds boards to user
+                    case 'users':
+                        $model->boards = $this->_get('boards', array('createdBy' => new \MongoId($model->_id)));
+                        break;
+                    // adds tickets to board
+                    case 'boards':
+                        $model->tickets = $this->_get('tickets', array('board' => new \MongoId($model->_id)));
+                        break;
+                }
+                
+                $models[] = $model;
+            }
+            
         }
-        return $return;
+        
+        return $models;
     }
     
     
     
     
     // DELETES
-    public function delete ($id = null)
+    public function delete ($from, $id = null)
     {
-        return is_null($id) ? $this->_delete(array()) : $this->_delete(array('_id' => new \MongoId($id)), array('justOne' => true));
+        return is_null($id) ? $this->_delete($from, array()) : $this->_delete($from, array('_id' => new \MongoId($id)), array('justOne' => true));
     }
     
-    private function _delete ($query, $options = array())
+    private function _delete ($from, $query, $options = array())
     {
-        $objects = $this->_get($query);
+        $collection = $this->db->selectCollection($from);
         
-        foreach ($objects as $object) {
-            $properties = get_object_vars($object);
+        $models = $this->_get($query);
+        
+        foreach ($models as $model) {
+            $properties = get_object_vars($model);
             
-            // if there's boards then object must be user
+            // if there's boards then model must be user
             // delete boards from that user
             if (isset($properties['boards'])) {
-                $this->collection = $this->db->selectCollection('boards');
-                $this->_delete(array('createdBy' => new \MongoId($object->id)));
-                $this->collection = $this->db->selectCollection('users');
+                $this->_delete('boards', array('createdBy' => new \MongoId($model->_id)));
             }
             
-            // if there's tickets then object must be board
+            // if there's tickets then model must be board
             // delete tickets from that board
             if (isset($properties['tickets'])) {
-                $this->collection = $this->db->selectCollection('tickets');
-                $this->_delete(array('board' => new \MongoId($object->id)));
-                $this->collection = $this->db->selectCollection('boards');
+                $this->_delete('boards', array('board' => new \MongoId($model->_id)));
             }
             
         }
         
-        return $this->collection->remove($query, $options);
+        return $collection->remove($query, $options);
         
     }
     
     
     
     
-    public function put ($id = null)
+    public function put ($to, $id = null)
     {
     }
     
     
     
     
-    public function post ($id = null)
+    public function post ($to)
     {
-    }
-    
-    
-    
-    
-    private function _createObject ($array)
-    {
-        $object = json_decode(json_encode($array));
+        $data = $_POST;
         
-        if (isset($object->__v)) { unset($object->__v); }
-        if (isset($object->board)) { $object->board = $object->board->{'$id'}; }
-        if (isset($object->createdBy)) { $object->createdBy = $object->createdBy->{'$id'}; }
-        if (isset($object->_id)) { $object->id = $object->_id->{'$id'}; unset($object->_id); }
+        // unset unnecessary fields
+        unset($data['REQUEST_METHOD']);
         
-        // events magic
-        if (isset($object->data->id)) { $object->data->id = $object->data->id->{'$id'}; }
         
-        switch ($this->collection->getName()) {
-            
-            // adds boards to user
-            case 'users':
-                $this->collection = $this->db->selectCollection('boards');
-                $object->boards = $this->_get(array('createdBy' => new \MongoId($object->id)));
-                $this->collection = $this->db->selectCollection('users');
-                break;
-                
-            // adds tickets to board
+        //modelfactory expects mongoid objects..
+        $data['_id'] = new \MongoId();
+        
+        switch ($to) {
             case 'boards':
-                $this->collection = $this->db->selectCollection('tickets');
-                $object->tickets = $this->_get(array('board' => new \MongoId($object->id)));
-                $this->collection = $this->db->selectCollection('boards');
-                break;
-                
+                $data['accessCode'] = null;
+                $data['background'] = 'none';
+                $data['createdBy'] = new \MongoId($data['createdBy']);
+                $data['size'] = array ('height' => 8, 'width' => 8);
+            break;
+            
+            case 'tickets':
+                $data['board'] = new \MongoId($data['board']);
+                $data['position'] = array ('z' => 0, 'x' => 0, 'y' => 0);
+            break;
+            
+            case 'users':
+                $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT, array('cost' => 10));
+            break;
         }
         
-        return $object;
         
+        
+        $model = $this->modelFactory->createModel($to, $data);
+        
+        
+        if ($model)
+        {
+            $collection = $this->db->selectCollection($to);
+            
+            // mongoid objects again....
+            unset($model->_id);
+            if ($to == 'boards')  { $model->createdBy = new \MongoId($model->createdBy); }
+            if ($to == 'tickets') { $model->board     = new \MongoId($model->board);     }
+            
+            return $collection->insert($model);
+        }
+        
+        return null;
     }
+    
     
     
     

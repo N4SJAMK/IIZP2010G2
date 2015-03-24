@@ -35,7 +35,7 @@ final class Router
                 'tickets\/([0-9a-fA-F]{24})' => 'tickets'
             )
         ),
-        $_controller = null,
+        $_collection = null,
         $_id = null;
     
     
@@ -54,9 +54,9 @@ final class Router
             
             $this->_parseController($path, $http_method);
             
-            if (!is_null($this->_controller)) {
-                $controller = new \api\Mapper($this->_controller);
-				return $controller->$http_method($this->_id);
+            if (!is_null($this->_collection)) {
+                $mapper = new \api\Mapper();
+				return $mapper->$http_method($this->_collection, $this->_id);
             }
             
         }
@@ -79,7 +79,7 @@ final class Router
         foreach ($this->_paths[$http_method] as $pattern => $tempcontroller) {
             
             if (preg_match('/^'.$pattern.'$/', $path, $tempmatches)) {
-                $this->_controller = $tempcontroller;
+                $this->_collection = $tempcontroller;
                 $this->_id = isset($tempmatches[1]) ? $tempmatches[1] : null;
                 break;
             }
