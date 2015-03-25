@@ -76,7 +76,7 @@ final class Mapper
     {
         $collection = $this->db->selectCollection($from);
         
-        $models = $this->_get($query);
+        $models = $this->_get($from, $query);
         
         foreach ($models as $model) {
             $properties = get_object_vars($model);
