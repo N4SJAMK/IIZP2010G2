@@ -8,46 +8,6 @@ final class Router
     
     
     
-<<<<<<< HEAD
-    
-    private $_paths = array (
-    
-        'get' => array (
-            'users'                      => 'Users',
-            'users\/([0-9a-fA-F]{24})'   => 'Users',
-            'boards'                     => 'Boards',
-            'boards\/([0-9a-fA-F]{24})'  => 'Boards',
-            'tickets'                    => 'Tickets',
-            'tickets\/([0-9a-fA-F]{24})' => 'Tickets',
-			'events'                     => 'Events',
-            'events\/([0-9a-fA-F]{24})'  => 'Events'
-        ),
-        
-        'post' => array (
-            'users'   => 'Users',
-            'boards'  => 'Boards',
-            'tickets' => 'Tickets',
-			'events'  => 'Events'
-        ),
-        
-        'put' => array (
-            'users\/([0-9a-fA-F]{24})'   => 'Users',
-            'boards\/([0-9a-fA-F]{24})'  => 'Boards',
-            'tickets\/([0-9a-fA-F]{24})' => 'Tickets',
-            'events\/([0-9a-fA-F]{24})'  => 'Events'
-        ),
-        
-        'delete' => array (
-            'users\/([0-9a-fA-F]{24})'   => 'Users',
-            'boards\/([0-9a-fA-F]{24})'  => 'Boards',
-            'tickets\/([0-9a-fA-F]{24})' => 'Tickets',
-            'events\/([0-9a-fA-F]{24})'  => 'Events'
-        )
-    );
-    
-    private $_controller = null;
-    private $_id = null;
-=======
     private 
         $_paths = array (
             'get' => array (
@@ -77,7 +37,6 @@ final class Router
         ),
         $_collection = null,
         $_id = null;
->>>>>>> modeless
     
     
     
@@ -116,15 +75,11 @@ final class Router
         }
         
         
-        // etsitään oikea controlleri
-        foreach ($this->_paths[$http_method] as $pattern => $tempcontroller) {
+        // etsitään oikea collection
+        foreach ($this->_paths[$http_method] as $pattern => $tempcollection) {
             
             if (preg_match('/^'.$pattern.'$/', $path, $tempmatches)) {
-<<<<<<< HEAD
-                $this->_controller = $tempcontroller;
-=======
-                $this->_collection = $tempcontroller;
->>>>>>> modeless
+                $this->_collection = $tempcollection;
                 $this->_id = isset($tempmatches[1]) ? $tempmatches[1] : null;
                 break;
             }
