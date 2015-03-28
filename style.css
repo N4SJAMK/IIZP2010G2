@@ -1,4 +1,6 @@
-testi {
+.testi {
+
+margin-top: 60px;
 width: 50%;
 overflow: auto;
 margin-left: 10px;
@@ -8,9 +10,3 @@ height: 60px !important;
 overflow: auto;
 }
 
-.panel-success {
-
-width: 50%;
-overflow: auto;
-margin-left: 10%;
-}
