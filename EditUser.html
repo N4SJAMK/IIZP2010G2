@@ -20,7 +20,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand" href="index.html">Contriboard</a>
+               <a class="navbar-brand" href="Collapse.html">Contriboard</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                <ul class="nav navbar-nav navbar-right">
@@ -78,18 +78,18 @@
          <table class="table">
             <thead>
                <tr>
-                  <th>Boardname</th>
-                  <th>info</th>
+                  <th>Id</th>
+                  <th>Name</th>
 				  <th>asd</th>
                   <th>asddd</th>
                </tr>
             </thead>
             <tbody>
                <tr ng-repeat="x in GetData">
-                  <td>{{ x.Boardname}}</td>
-                  <td>{{ x. }}</td>
-				  <td>{{ x.}}</td>  
-                  <td><button  class="btn btn-default" title="Edit"></button>Edit<button  class="btn btn-default" ng-click="deleteCall(x.User)" ng-class="{selected: x.User === IdSelected}" title="Delete"> </button>Delete</td>
+                  <td>{{ x._id}}</td>
+                  <td>{{ x.email }}</td>
+				  <td>{{ x.a}}</td>  
+                  <td><button  class="btn btn-default" title="Edit"></button>Edit<button  class="btn btn-default" ng-click="deleteCall(x._id)" ng-class="{selected: x._id === IdSelected}" title="Delete"> </button>Delete</td>
                </tr>
             </tbody>
          </table>
