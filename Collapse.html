@@ -10,55 +10,76 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
       <!-- Custom styles for this template -->  
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-      <script language="javascript" type="text/javascript" src="AccountControllerv2.js"></script>
+      <script language="javascript" type="text/javascript" src="AccountController.js"></script>
    </head>
    
    <body ng-controller="TicketController">
-      <div class="testi">
-         <h1>Account Management</h1>
-		 <button type="button"  class="btn btn-success" >asdf</button>
-		 <input type="text"> </input>  <button class="btn btn-default">Search</button>
+      <div class="account">
+		      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="Collapse.html">Contriboard -  Account Management</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">Log out</a></li>
+               </ul>
+               <form class="navbar-form navbar-right">
+               </form>
+            </div>
+         </div>
+      </nav>
+	  <div class="testi">
+		
+		 <input type="text"> </input>  <button type="button"  class="btn btn-success" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>
       </div>
       <div class="panels">
         
 
 		
-		 <accordion close-others="false">
-             <div class="panel panel-success"  ng-repeat="x in GetUser" accordion-group heading="{{x.name}}" >
-                <accordion-heading > <div ng-click="TicketCall()">
-				{{x.name}} </div>
+		 <accordion close-others="true">
+             <div class="panel panel-info"  ng-repeat="x in GetUser" accordion-group heading="{{x.email}} {{x._id}}" >
+                <accordion-heading > <div ng-click="BoardCall(x._id)">
+				<span class="label label-success">{{x.email}}  </span> <span class="label label-info">{{x._id}} </span></div>
 				<div class="btn-group pull-right">
-				<button type="button" class="btn btn-small" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="btn btn-small" ng-click="$event.preventDefault(); $event.stopPropagation(); deleteCall(IdSelected)">Delete</button>
+				<button type="button" class="btn btn-small" href="EditUser.html" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="btn btn-small" ng-class="{'selected': x._id === IdSelected}" ng-click="deleteCall(x._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
                   </div>
 				  <div  id="collapseOne" class="panel-collapse collapse in">
                    </div> 		
                   </accordion-heading>				   
                   </accordion-group> 	  
-				
-				<div  ng-repeat="y in GetBoard">
-               <div class="panel panel-default"  ng-repeat="b in y" accordion-group heading="{{b.ticketnumber}}" >
-                   <accordion-heading> <div ng-click="ArticleCall();">
-				{{b.ticketnumber}} </div>
+				<accordion close-others="true">
+				<div  ng-repeat="y in GetBoard.boards">
+               <div class="panel panel-info"   accordion-group heading="{{y._id}} {{y.name}}" > 
+                   <accordion-heading> <div ng-class="{'selected': y._id === IdSelected2}"  ng-click="TicketCall(y._id)">
+				<span class="label label-success">{{y._id}}</span> <span class="label label-info">{{y.tickets}} </span>   </div>
 				<div class="btn-group pull-right">
-				<button type="button" class="btn btn-small" ng-click=" $event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="btn btn-small" ng-click="$event.preventDefault(); $event.stopPropagation(); deleteCall(IdSelected)">Delete</button>
+				<button type="button" class="btn btn-small"  ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="btn btn-small" ng-class="{'selected': y._id === IdSelected2}" ng-click="deleteBoard(y._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
                   </div>
 				  <div  id="collapseOne" class="panel-collapse collapse in">
                    </div> 		
                   </accordion-heading>				   
                   </accordion-group> 
-				 
-				 <div ng-repeat="z in GetTicket">
-                  <div class="panel panel-default" ng-repeat="c in z" accordion-group heading="{{c.name}}" >
+					<accordion close-others="true">
+				 <div ng-repeat = "tickets in GetTicket.tickets track by $index"> 
+                  <div class="panel panel-info"   accordion-group heading="{{tickets._id}}" >
                       <accordion-heading>
-				{{c.name}}
-				<div class="btn-group pull-right">
-				<button type="button" class="btn btn-small" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="btn btn-small" ng-click="$event.preventDefault(); $event.stopPropagation(); deleteCall(IdSelected)">Delete</button>
-                  </div>
+				<span class="label label-info">{{$index}} {{tickets._id}} </span> <span class="label label-success"> {{tickets.content}} </span>
+				<div class="btn-group pull-right"> 
+				<button type="button" class="btn btn-small" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="btn btn-small" ng-class="{'selected': tickets._id === IdSelected3}" ng-click="deleteTicket(tickets._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
+                  </div> 
 				  <div  id="collapseOne" class="panel-collapse collapse in">
                    </div> 		
                   </accordion-heading>				   
                   </accordion-group> 
          </div>
+		
          </div> 
       </div>
 	  </div>
@@ -66,6 +87,7 @@
       </div>
 	  <div> <h3>Send message</h3> 
 	  <textarea rows="4" cols="50" class=""> </textarea> <br>
-	  <button class="btn btn-default"> Send</button>
+	  <button class="btn btn-info"> Send</button>
+	  </div>
 	  </div>
    </body>
