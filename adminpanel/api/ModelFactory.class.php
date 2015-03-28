@@ -5,10 +5,16 @@ namespace api;
 
 final class ModelFactory
 {
-    
-    
-    
-    
+	//this is a test, modify values if need be
+    private $validatingArray = array(
+		'user' => array(
+			'_id' => array('validateType' => 'integer','required' => ''),
+			'email' => array('validateType' => 'string'),
+			'password' => array('validateType' => 'string','required' => ''),
+			'token' => array('validateType' => 'string'),
+			'__boards' => array('validateType' => 'array')
+		)
+	);
     
     
     // $type is the name of mongo collection like users, boards, tickets, events
@@ -28,22 +34,43 @@ final class ModelFactory
         if (isset($model->createdBy)) { $model->createdBy = $model->createdBy->{'$id'}; }
         if (isset($model->data->id)) { $model->data->id = $model->data->id->{'$id'}; }
         
-        
-        return $this->_validateModel($type, $model);
+		
+        if ($this->_validateModel($validatingArray[$type], (array) $model)){
+			return $model;
+		}
+        return false;
         
     }
     
     
     
-    private function _validateModel ($type, $model)
+    private function _validateModel ($testArray, $modelArray)
     {
-        
+		//Go trough the testArray and check if corresponding array
+		//elements are found in modelArray
+        foreach($testArray as $key => $value) {
+			if (isset($modelArray[$key])) {
+				
+				//Check if the last dimension of testArray is reached
+				if(!isset($value['validateType'])) {
+					//If not check the next dimension recursively
+					if(!_validateModel ($testArray[$key], $modelArray[$key])) {
+						return false;
+					}
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		return true;		
+		
         // validate model properties against model type
         
         // if validate not ok
         // return false
         // else
-        return $model;
+        //return $model;
         
     }
     
