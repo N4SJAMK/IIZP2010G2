@@ -7,7 +7,7 @@ final class ModelFactory
 {
 	//this is a test, modify values if need be
     private $validatingArray = array(
-		'user' => array(
+		'users' => array(
 			'_id' => array('validateType' => 'integer','required' => ''),
 			'email' => array('validateType' => 'string'),
 			'password' => array('validateType' => 'string','required' => ''),
