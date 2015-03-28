@@ -6,7 +6,7 @@ app.controller('UserController', [ '$http', '$scope', '$resource', function($htt
 		   $scope.GetData = [];
 		   $scope.IdSelected = null;
 		   
-  $http.get('http://127.0.0.1:8080/api/queue/').success(function(data) {
+  $http.get('http://localhost:8001/api/users/').success(function(data) {
 		   $scope.GetData = data;
 		    }); //http://127.0.0.1:8000/json*/
   
@@ -27,7 +27,7 @@ app.controller('UserController', [ '$http', '$scope', '$resource', function($htt
 	  };    
     $scope.msg = {Username: $scope.postParam1, Password: $scope.postParam2, Adminlevel: $scope.postParam3};
  
-    $http.post("http://127.0.0.1:8080/api/queue/", $scope.msg)
+    $http.post("http://localhost:8001/api/users/", $scope.msg)
         .success(function (data, status, headers, config)
         {
 		 $scope.msg = data;
@@ -49,7 +49,7 @@ app.controller('UserController', [ '$http', '$scope', '$resource', function($htt
 	  };    
     $scope.msg = {Username: $scope.putParam1, Password: $scope.putParam2, Adminlevel: $scope.putParam3};
  
-    $http.post("http://127.0.0.1:8080/api/queue/", $scope.msg)
+    $http.post("http://localhost:8001/api/users/", $scope.msg)
         .success(function (data, status, headers, config)
         {
 		 $scope.msg = data;
@@ -65,7 +65,7 @@ app.controller('UserController', [ '$http', '$scope', '$resource', function($htt
  $scope.deleteCall = function(IdSelected) {
      $scope.IdSelected = IdSelected;
 
-    $http.delete('http://127.0.0.1:8080/api/queue/' + IdSelected)
+    $http.delete('http://localhost:8001/api/users/' + IdSelected)
         .success(function(data) {
             $scope.GetData = data;
             console.log(data);
@@ -76,7 +76,7 @@ app.controller('UserController', [ '$http', '$scope', '$resource', function($htt
         });
 };
 $scope.update = function() {
-  $http.get('http://127.0.0.1:8080/api/queue/').success(function(data) {
+  $http.get('http://localhost:8001/api/users/').success(function(data) {
 		   $scope.GetData= data;
 		   console.table(data);
 		    }); //http://127.0.0.1:8000/json*/
