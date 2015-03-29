@@ -1,0 +1,12 @@
+.testi {
+
+margin-top: 60px;
+width: 50%;
+overflow: auto;
+margin-left: 10px;
+}
+panels {
+height: 60px !important;
+overflow: auto;
+}
+

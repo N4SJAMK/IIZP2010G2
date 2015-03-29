@@ -1,0 +1,98 @@
+<!DOCTYPE html> 
+<html ng-app="AppGet">
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular-route.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular-resource.js"></script>
+      <script type="text/javascript" src="UserController.js"></script>
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="style2.css">
+      <!-- Bootstrap core CSS -->
+      <link href="http://student.labranet.jamk.fi/~G3315/dist/css/bootstrap.min.css" rel="stylesheet">    
+   </head>
+   <body  ng-controller="UserController as GetData" >
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="Collapse.html">Contriboard</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">Log out</a></li>
+               </ul>
+               <form class="navbar-form navbar-right">
+               </form>
+            </div>
+         </div>
+      </nav>
+      <header>
+         <h3 class="tabs_involved">Manage Users</h3>
+      </header> 
+	 
+	  
+   <div  class="form-group" >
+<h2>User</h2>   <!-- ng-app="AppPost" ng-controller="GetController-->
+
+      <form class="form-horizontal">
+         <div class="form-group">
+            <label  class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+               <input type="email" ng-model="postParam1"  class="form-control"  placeholder="Email address" required autofocus>
+            </div>
+         </div>
+		 
+         <div class="form-group">
+            <label  class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+             <input type="password" ng-model="postParam2" class="form-control" " placeholder="Password" required autofocus>
+            </div>
+			</div>
+			<div class="form-group">
+            <label  class="col-sm-2 control-label">UserLevel</label>
+			<div class="col-sm-10">
+             <select type="text" ng-model="postParam3"> 
+			 <option value="1">Admin</option>
+			 <option value="2">Power user</option>
+			 <option value="3">User</option>
+			 </select>
+            </div>
+         </div>
+		 
+         <div class="col-sm-offset-2 col-sm-10">
+               <button class="btn btn-default" ng-click="update()" >Update</button>
+          <input type="checkbox" name="locked">Locked</input>
+         </div>
+		 </div>
+      </form>
+	  <h3>Boards</h3>
+	    <form class="navbar-form navbar-left">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+	  <div  class="table1" >
+         <table class="table">
+            <thead>
+               <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+				  <th>asd</th>
+                  <th>asddd</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="x in GetData">
+                  <td>{{ x._id}}</td>
+                  <td>{{ x.email }}</td>
+				  <td>{{ x.a}}</td>  
+                  <td><button  class="btn btn-default" title="Edit"></button>Edit<button  class="btn btn-default" ng-click="deleteCall(x._id)" ng-class="{selected: x._id === IdSelected}" title="Delete"> </button>Delete</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </body>
+</html>

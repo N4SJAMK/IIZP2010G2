@@ -1,0 +1,91 @@
+<!DOCTYPE html> 
+<html ng-app="MainApp">
+   <head>
+      <meta charset="utf-8">
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular-route.js"></script>
+      <script src="https:///angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+      <!-- Custom styles for this template -->  
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+      <script language="javascript" type="text/javascript" src="AccountController.js"></script>
+   </head>
+   
+   <body ng-controller="TicketController">
+      <div class="account">
+		      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="Collapse.html">Contriboard -  Account Management</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">Log out</a></li>
+               </ul>
+               <form class="navbar-form navbar-right">
+               </form>
+            </div>
+         </div>
+      </nav>
+	  <div class="testi">
+		
+		 <input type="text"> </input>  <button type="button"  class="btn btn-info" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>
+      </div>
+      <div class="panels">
+
+		 <accordion close-others="true">
+             <div class="panel panel-info"  ng-repeat="x in GetUser" accordion-group heading="{{x.email}} {{x._id}}" >
+                <accordion-heading > <div ng-click="BoardCall(x._id)">
+				<span class="label label-success">{{x.email}} <div class="btn-group pull-right">
+				<button type="button" class="glyphicon glyphicon-wrench" href="EditUser.html" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': x._id === IdSelected}" ng-click="deleteCall(x._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
+                  </div> </span> <span class="label label-info">{{x._id}} </span></div>
+				  <div  id="collapseOne" class="panel-collapse collapse in">
+                   </div> 		
+                  </accordion-heading>				   
+                  </accordion-group> 	 
+				  
+				<accordion close-others="true">
+				<div  ng-repeat="y in GetBoard.boards">
+               <div class="panel panel-info"   accordion-group heading="{{y._id}} {{y.name}}" > 
+                   <accordion-heading> <div ng-class="{'selected': y._id === IdSelected2}"  ng-click="TicketCall(y._id)">
+				<span class="label label-success">{{y._id}}</span> <span class="label label-info">{{y.tickets}} </span> <div class="btn-group pull-right">
+				<button type="button" class="glyphicon glyphicon-wrench"  ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': y._id === IdSelected2}" ng-click="deleteBoard(y._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
+                  </div>  </div>		
+				  <div  id="collapseOne" class="panel-collapse collapse in">
+                   </div> 		
+                  </accordion-heading>				   
+                  </accordion-group> 
+				  
+					<accordion close-others="true">
+				 <div ng-repeat = "tickets in GetTicket.tickets track by $index"> 
+                  <div class="panel panel-info"   accordion-group heading="{{tickets._id}}" >
+                      <accordion-heading>
+				<span class="label label-info">{{$index}} {{tickets._id}} </span> <span class="label label-success"> {{tickets.content}} </span> <span class="label label-warning"> {{tickets.position}} </span> <div class="btn-group pull-right"> 
+				<button type="button" class="glyphicon glyphicon-wrench" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': tickets._id === IdSelected3}" ng-click="deleteTicket(tickets._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
+                  </div>  </span>
+				
+				  <div  id="collapseOne" class="panel-collapse collapse in">
+                   </div> 		
+                  </accordion-heading>				   
+                  </accordion-group> 
+         </div>
+         </div> 
+      </div>
+	  </div>
+         </div> 
+      </div>
+      
+	  <div> <h3>Send message</h3> 
+	  <textarea rows="4" cols="50" class=""> </textarea> <br>
+	  <button class="btn btn-info"> Send</button>
+	  </div>
+	  </div>
+   </body>
