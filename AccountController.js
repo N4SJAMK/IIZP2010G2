@@ -11,7 +11,12 @@ app.controller('TicketController', [ '$http', '$scope', function($http, $scope) 
 		   $scope.IdSelected2 = null;
 		   $scope.IdSelected3 = null;
 		   
-		 
+var logResult = function (str, data, status)
+    {
+      return str + "\n\n" +
+        "data: " + data + "\n\n" +
+        "status: " + status + "\n\n" ;
+    };
 		   
 		 $scope.Update = function() { 
            $http.get('http://localhost:8001/api/users').success(function(data) {
@@ -33,8 +38,28 @@ app.controller('TicketController', [ '$http', '$scope', function($http, $scope) 
 		   console.log(data);
 		    }); 	
 			}
+	     
+		 $scope.postCall = function() { 
+			console.log($scope.postParam1);
+	
+			var PostParam = {
+				Username: $scope.postParam1,
+			};    
+			$scope.msg = {Username: $scope.postParam1};
+ 
+			$http.post("http://localhost:8001/api/users/", $scope.msg)
+				.success(function (data, status, headers, config)
+				{
+				$scope.msg = data;
+				$scope.postCallResult = logResult("POST SUCCESS", data, status, headers);
+				})
+				.error(function (data, status, headers)
+				{
+				$scope.postCallResult = logResult("POST ERROR", data, status, headers);
+				});
+		};
 
-	$scope.deleteCall = function(IdSelected3) {
+$scope.deleteCall = function(IdSelected3) {
     $http.delete('http://localhost:8001/api/users/' + IdSelected3)
         .success(function(data) {
             $scope.Delete = data;
