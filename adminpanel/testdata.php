@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+ini_set('max_execution_time', 0);
 
 // USE EXAMPLE
 // testdata.php?users=50&boards=15&tickets=32
@@ -11,11 +12,12 @@ ini_set('display_errors', '1');
 // settings
 $userCount          = filter_input(INPUT_GET, 'users', FILTER_VALIDATE_INT);
 $maxBoardsPerUser   = filter_input(INPUT_GET, 'boards', FILTER_VALIDATE_INT);
-$maxTicketsPerBoard = filter_input(INPUT_GET, 'tickets', FILTER_VALIDATE_INT, array('options' => array('min_range' => 0, 'max_range' => 64)));
+$maxTicketsPerBoard = filter_input(INPUT_GET, 'tickets', FILTER_VALIDATE_INT, array('options' => array('min_range' => 0)));
 
 $userCount          = !is_int($userCount)          ? 50 : $userCount;
 $maxBoardsPerUser   = !is_int($maxBoardsPerUser)   ? 15 : $maxBoardsPerUser;
 $maxTicketsPerBoard = !is_int($maxTicketsPerBoard) ? 32 : $maxTicketsPerBoard;
+$maxTicketsPerBoard = ($maxTicketsPerBoard > 64)   ? 64 : $maxTicketsPerBoard;
 
 $usersCreated = 0;
 $boardsCreated = 0;
@@ -40,6 +42,11 @@ $boardCollection->remove();
 $ticketCollection->remove();
 
 
+$ticketBool = ($maxTicketsPerBoard < 32);
+
+if (!$ticketBool) {
+	$maxTicketsPerBoard = 64 - $maxTicketsPerBoard;
+}
 
 // create users
 for ($x = 1; $x <= $userCount; $x++) {
@@ -69,42 +76,46 @@ for ($x = 1; $x <= $userCount; $x++) {
         );
         $boardCollection->insert($board);
         $boardsCreated++;
+		
         
         // vector for ticket positions
         $freePositions = array();
         for ($pos_x = 0; $pos_x < 8; $pos_x++) {
             $freePositions[$pos_x] = array();
             for ($pos_y = 0; $pos_y < 8; $pos_y++) {
-                $freePositions[$pos_x][$pos_y] = true;
+                $freePositions[$pos_x][$pos_y] = !$ticketBool;
             }
         }
-        
+		
         //create tickets for board
-        $ticketCount = mt_rand(0, $maxTicketsPerBoard);
-        for ($z = 1; $z <= $ticketCount; $z++) {
+        for ($z = 1; $z <= $maxTicketsPerBoard; $z++) {
             
             $rand_x = array_rand($freePositions, 1);
             $rand_y = array_rand($freePositions[$rand_x], 1);
             
             // if position is free
-            if ($freePositions[$rand_x][$rand_y]) {
-                
-                $freePositions[$rand_x][$rand_y] = false;
-                $ticket = array (
-                    '_id' => new MongoId(),
-                    'board' => $board['_id'],
-                    'position' => array('z' => 0, 'x' => $rand_x*192, 'y' => $rand_y*108),
-                    'color' => $ticketColor[array_rand($ticketColor, 1)],
-                    'content' => 'user_'.$x.'-board_'.$y.'-ticket_'.$z
-                );
-                $ticketCollection->insert($ticket);
-                $ticketsCreated++;
-            } else {
-                // if position is taken
-                $z--;
+            if ($freePositions[$rand_x][$rand_y] == $ticketBool) {
+                $freePositions[$rand_x][$rand_y] = !$ticketBool;
             }
-            
         }
+		
+        for ($pos_x = 0, $z = 0; $pos_x < 8; $pos_x++, $z++) {
+            for ($pos_y = 0; $pos_y < 8; $pos_y++, $z++) {
+				if ($freePositions[$pos_x][$pos_y]) {
+					$ticket = array (
+						'_id' => new MongoId(),
+						'board' => $board['_id'],
+						'position' => array('z' => 0, 'x' => $pos_x*192, 'y' => $pos_y*108),
+						'color' => $ticketColor[array_rand($ticketColor, 1)],
+						'content' => 'user_'.$x.'-board_'.$y.'-ticket_'.$z
+					);
+					$ticketCollection->insert($ticket);
+					$ticketsCreated++;
+				}
+            }
+        }
+		
+		
     }
 }
 

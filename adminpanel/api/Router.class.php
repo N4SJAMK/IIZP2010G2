@@ -17,17 +17,21 @@ final class Router
                 'boards\/([0-9a-fA-F]{24})'  => 'boards',
                 'tickets'                    => 'tickets',
                 'tickets\/([0-9a-fA-F]{24})' => 'tickets',
-                'events'                     => 'events'
+                'events'                     => 'events',
+				'database'					 => 'database'
                 ),
             'post' => array (
-                'users'   => 'users',
-                'boards'  => 'boards',
-                'tickets' => 'tickets'
+                'users'    => 'users',
+                'boards'   => 'boards',
+                'tickets'  => 'tickets',
+				'database' => 'database'
                 ),
             'put' => array (
-                'users\/([0-9a-fA-F]{24})'   => 'users',
-                'boards\/([0-9a-fA-F]{24})'  => 'boards',
-                'tickets\/([0-9a-fA-F]{24})' => 'tickets'
+                'users\/([0-9a-fA-F]{24})'           => 'users',
+				'users\/(logout)'                    => 'users',
+				'users\/(logout)\/([0-9a-fA-F]{24})' => 'users',
+                'boards\/([0-9a-fA-F]{24})'          => 'boards',
+                'tickets\/([0-9a-fA-F]{24})'         => 'tickets'
                 ),
             'delete' => array (
                 'users\/([0-9a-fA-F]{24})'   => 'users',

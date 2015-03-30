@@ -29,10 +29,10 @@ final class Mapper
     // GETS
     public function get ($from, $id = null)
     {
-        return is_null($id) ? $this->_get($from, array()) : current($this->_get($from, array('_id' => new \MongoId($id))));
+        return is_null($id) ? $this->_get($from, array()) : current($this->_get($from, array('_id' => new \MongoId($id)), true));
     }
     
-    private function _get ($from, $query)
+    private function _get ($from, $query, $recursive = false)
     {
         $collection = $this->db->selectCollection($from);
         $results = $collection->find($query);
@@ -44,16 +44,18 @@ final class Mapper
             
             if ($model) {
                 
-                switch ($from) {
-                    // adds boards to user
-                    case 'users':
-                        $model->boards = $this->_get('boards', array('createdBy' => new \MongoId($model->_id)));
-                        break;
-                    // adds tickets to board
-                    case 'boards':
-                        $model->tickets = $this->_get('tickets', array('board' => new \MongoId($model->_id)));
-                        break;
-                }
+				if ($recursive) {
+					switch ($from) {
+						// adds boards to user
+						case 'users':
+							$model->boards = $this->_get('boards', array('createdBy' => new \MongoId($model->_id)), false);
+							break;
+						// adds tickets to board
+						case 'boards':
+							$model->tickets = $this->_get('tickets', array('board' => new \MongoId($model->_id)), false);
+							break;
+					}
+				}
                 
                 $models[] = $model;
             }
