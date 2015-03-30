@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 ini_set('max_execution_time', 0);
+ini_set('memory_limit', '1024M');
 
 // USE EXAMPLE
 // testdata.php?users=50&boards=15&tickets=32
@@ -18,6 +19,8 @@ $userCount          = !is_int($userCount)          ? 50 : $userCount;
 $maxBoardsPerUser   = !is_int($maxBoardsPerUser)   ? 15 : $maxBoardsPerUser;
 $maxTicketsPerBoard = !is_int($maxTicketsPerBoard) ? 32 : $maxTicketsPerBoard;
 $maxTicketsPerBoard = ($maxTicketsPerBoard > 64)   ? 64 : $maxTicketsPerBoard;
+$maxTicketsPerBoard2 = $maxTicketsPerBoard;
+
 
 $usersCreated = 0;
 $boardsCreated = 0;
@@ -48,16 +51,19 @@ if (!$ticketBool) {
 	$maxTicketsPerBoard = 64 - $maxTicketsPerBoard;
 }
 
+$users = array();
+$boards = array();
+$tickets = array();
+
 // create users
 for ($x = 1; $x <= $userCount; $x++) {
     
-    $user = array (
+    $users[$x] = array (
         '_id'      => new MongoId(),
         'email'    => 'email_'.$x.'@testdata.fi',
         'password' => '$2a$10$.EcKBd5tkSm1bswXQ1KNMOGtk1L7OKaqAv0k9ALh4HjEsJe21m.4i',
         'token'    => $userToken[array_rand($userToken, 1)]
     );
-    $userCollection->insert($user);
     $usersCreated++;
     
     
@@ -66,15 +72,14 @@ for ($x = 1; $x <= $userCount; $x++) {
     $boardCount = mt_rand(0, $maxBoardsPerUser);
     for ($y = 1; $y <= $boardCount; $y++) {
     
-        $board = array (
+        $boards[$x.'-'.$y] = array (
             '_id'        => new MongoId(),
             'accessCode' => null,
             'background' => 'none',
-            'createdBy'  => $user['_id'],
+            'createdBy'  => $users[$x]['_id'],
             'name'       => 'user_'.$x.'-board_'.$y,
             'size'       => array('height' => 8, 'width' => 8)
         );
-        $boardCollection->insert($board);
         $boardsCreated++;
 		
         
@@ -102,14 +107,13 @@ for ($x = 1; $x <= $userCount; $x++) {
         for ($pos_x = 0, $z = 0; $pos_x < 8; $pos_x++, $z++) {
             for ($pos_y = 0; $pos_y < 8; $pos_y++, $z++) {
 				if ($freePositions[$pos_x][$pos_y]) {
-					$ticket = array (
+					$tickets[] = array (
 						'_id' => new MongoId(),
-						'board' => $board['_id'],
+						'board' => $boards[$x.'-'.$y]['_id'],
 						'position' => array('z' => 0, 'x' => $pos_x*192, 'y' => $pos_y*108),
 						'color' => $ticketColor[array_rand($ticketColor, 1)],
 						'content' => 'user_'.$x.'-board_'.$y.'-ticket_'.$z
 					);
-					$ticketCollection->insert($ticket);
 					$ticketsCreated++;
 				}
             }
@@ -119,11 +123,15 @@ for ($x = 1; $x <= $userCount; $x++) {
     }
 }
 
+$userCollection->batchInsert($users);
+$boardCollection->batchInsert($boards);
+$ticketCollection->batchInsert($tickets);
+
 
 echo '<strong>Settings</strong><br>';
 echo 'Users: '.$userCount.'<br>';
 echo 'Max boards per user: '.$maxBoardsPerUser.'<br>';
-echo 'Max tickets per board: '.$maxTicketsPerBoard.'<br><br>';
+echo 'Max tickets per board: '.$maxTicketsPerBoard2.'<br><br>';
 
 echo '<strong>Created</strong><br>';
 echo 'Users: '.$usersCreated.'<br>';
