@@ -44,7 +44,7 @@ final class ModelFactory
 		
 		
         // array to stdClass object
-        $model = json_decode(json_encode(filter_var_array($array, $validatingArray)));
+        $model = json_decode(json_encode(filter_var_array($array, $validatingArray[$type])));
         
         
         // what is this shit??
