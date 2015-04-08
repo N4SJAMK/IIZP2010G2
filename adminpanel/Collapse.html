@@ -35,57 +35,54 @@
             </div>
          </div>
       </nav>
+	
 	  <div class="testi">
 		
 		 <input type="text"> </input>  <button type="button"  class="btn btn-info" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>
       </div>
       <div class="panels">
 
-		 <accordion close-others="true">
-             <div class="panel panel-info"  ng-repeat="x in GetUser" accordion-group heading="{{x.email}} {{x._id}}" >
-                <accordion-heading > <div ng-click="BoardCall(x._id)">
-				<span class="label label-success">{{x.email}} <div class="btn-group pull-right">
-				<button type="button" class="glyphicon glyphicon-wrench" href="EditUser.html" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': x._id === IdSelected}" ng-click="deleteCall(x._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
-                  </div> </span> <span class="label label-info">{{x._id}} </span></div>
-				  <div  id="collapseOne" class="panel-collapse collapse in">
-                   </div> 		
-                  </accordion-heading>				   
+		 <accordion >
+              <div ng-repeat="x in GetUser track by $index " accordion-group heading="{{x.email}} {{x._id}}"  >
+                <accordion-heading> <div ng-click="BoardCall(x._id); Render = !Render">
+				<span class="label label-success"> {{x.email}}   {{}} </span> <div class="btn-group pull-right">
+				<button type="button" class="glyphicon glyphicon-wrench" ng-click="$event.preventDefault(); $event.stopPropagation()"></button> 
+				<button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': x._id === IdSelected}" ng-click="deleteCall(x._id); $event.preventDefault(); $event.stopPropagation()"></button>
+                  </div>
+				 </div>
+				  </accordion-heading>				   
                   </accordion-group> 	 
 				  
-				<accordion close-others="true">
-				<div  ng-repeat="y in GetBoard.boards">
-               <div class="panel panel-info"   accordion-group heading="{{y._id}} {{y.name}}" > 
-                   <accordion-heading> <div ng-class="{'selected': y._id === IdSelected2}"  ng-click="TicketCall(y._id)">
-				<span class="label label-success">{{y._id}}</span> <span class="label label-info">{{y.tickets}} </span> <div class="btn-group pull-right">
-				<button type="button" class="glyphicon glyphicon-wrench"  ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': y._id === IdSelected2}" ng-click="deleteBoard(y._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
-                  </div>  </div>		
-				  <div  id="collapseOne" class="panel-collapse collapse in">
-                   </div> 		
-                  </accordion-heading>				   
+				 <accordion >	
+               <div  ng-if="Render" ng-repeat="y in GetBoard.boards track by $index"  accordion-group heading="{{y._id}} {{y.name}}" > 
+                 <accordion-heading > <div ng-class="{'selected': y._id === IdSelected2}"  ng-click="TicketCall(y._id); Collapsed = !Collapsed" >
+				<span class="label label-info">{{y._id}} {{y.tickets}} </span>
+				<div class="btn-group pull-right">
+				<button type="button" class="glyphicon glyphicon-wrench"  ng-click="$event.preventDefault(); $event.stopPropagation();"></button> 
+				<button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': y._id === IdSelected2}" ng-click="deleteBoard(y._id); $event.preventDefault(); $event.stopPropagation()"></button>
+                  </div>  </div>		 		
+                  </accordion-heading>		
+			  
                   </accordion-group> 
 				  
-					<accordion close-others="true">
-				 <div ng-repeat = "tickets in GetTicket.tickets track by $index"> 
-                  <div class="panel panel-info"   accordion-group heading="{{tickets._id}}" >
-                      <accordion-heading>
-				<span class="label label-info">{{$index}} {{tickets._id}} </span> <span class="label label-success"> {{tickets.content}} </span> <span class="label label-warning"> {{tickets.position}} </span> <div class="btn-group pull-right"> 
-				<button type="button" class="glyphicon glyphicon-wrench" ng-click="$event.preventDefault(); $event.stopPropagation();">Edit</button> <button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': tickets._id === IdSelected3}" ng-click="deleteTicket(tickets._id); $event.preventDefault(); $event.stopPropagation()">Delete</button>
+				 <accordion > 
+                  <div ng-if="!Collapsed" ng-repeat = "tickets in GetTicket.tickets track by $index" accordion-group heading="{{tickets._id}}" ng-click=" Collapsed = !Collapsed">
+                  <accordion-heading>
+				<span class="label label-warning">{{$index}} {{tickets._id}} {{tickets.position}} </span>
+				<div class="btn-group pull-right"> 
+				<button type="button" class="glyphicon glyphicon-wrench" ng-click="$event.preventDefault(); $event.stopPropagation();"></button> 
+				<button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': tickets._id === IdSelected3}" ng-click="deleteTicket(tickets._id); $event.preventDefault(); $event.stopPropagation()"></button>
                   </div>  </span>
-				
-				  <div  id="collapseOne" class="panel-collapse collapse in">
-                   </div> 		
-                  </accordion-heading>				   
-                  </accordion-group> 
-         </div>
+				  </div>
+				  </div>
          </div> 
       </div>
 	  </div>
-         </div> 
-      </div>
+   <button  class="btn btn-info" ng-click="loadMore()">Load more</button>
       
 	  <div> <h3>Send message</h3> 
 	  <textarea rows="4" cols="50" class=""> </textarea> <br>
 	  <button class="btn btn-info"> Send</button>
 	  </div>
-	  </div>
+	  
    </body>
