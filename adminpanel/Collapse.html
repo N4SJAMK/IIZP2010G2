@@ -42,7 +42,7 @@
       </div>
       <div class="panels">
 
-		 <accordion >
+		 <accordion close-others=true>
               <div ng-repeat="x in GetUser track by $index " accordion-group heading="{{x.email}} {{x._id}}"  >
                 <accordion-heading> <div ng-click="BoardCall(x._id); Render = !Render">
 				<span class="label label-success"> {{x.email}}   {{}} </span> <div class="btn-group pull-right">
@@ -53,7 +53,7 @@
 				  </accordion-heading>				   
                   </accordion-group> 	 
 				  
-				 <accordion >	
+				 <accordion  close-others=true>	
                <div  ng-if="Render" ng-repeat="y in GetBoard.boards track by $index"  accordion-group heading="{{y._id}} {{y.name}}" > 
                  <accordion-heading > <div ng-class="{'selected': y._id === IdSelected2}"  ng-click="TicketCall(y._id); Collapsed = !Collapsed" >
 				<span class="label label-info">{{y._id}} {{y.tickets}} </span>
@@ -80,6 +80,32 @@
 	  </div>
    <button  class="btn btn-info" ng-click="loadMore()">Load more</button>
       
+	  <form class="form-horizontal">
+         <div class="form-group">
+            <label  class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+               <input type="email" ng-model="Email"  class="form-control"  placeholder="Email address" required autofocus>
+            </div>
+         </div>
+		 
+         <div class="form-group">
+            <label  class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+             <input type="password" ng-model="Password" class="form-control" " placeholder="Password" required autofocus>
+            </div>
+			</div>
+			<div class="form-group">
+            <label  class="col-sm-2 control-label">UserLevel</label>
+			<div class="col-sm-10">
+             <select type="text" ng-model="postParam3"> 
+			 <option value="1">Admin</option>
+			 <option value="2">Power user</option>
+			 <option value="3">User</option>
+			 </select>
+            </div>
+			<button class="btn btn-default" ng-click="postCall()" >Add user</button>
+         </div>
+		 
 	  <div> <h3>Send message</h3> 
 	  <textarea rows="4" cols="50" class=""> </textarea> <br>
 	  <button class="btn btn-info"> Send</button>
