@@ -60,8 +60,8 @@ var logResult = function (str, data, status, headers)
 $scope.postCall = function() { 
 	
 	var PostParam = {
-	Email: $scope.Email,
-	Password: $scope.Password
+	email: $scope.Email,
+	password: $scope.Password
 	};
 	//$scope.msg = {Email: $scope.Email,  password: $scope.Password};
 	$scope.msg = JSON.stringify({Email: $scope.Email, Password: $scope.Password});
