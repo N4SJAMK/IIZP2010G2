@@ -64,7 +64,7 @@ $scope.postCall = function() {
 	password: $scope.Password
 	};
 	//$scope.msg = {Email: $scope.Email,  password: $scope.Password};
-	$scope.msg = JSON.stringify({Email: $scope.Email, Password: $scope.Password});
+	$scope.msg = JSON.stringify({email: $scope.Email, password: $scope.Password});
 	//console.log(PostParam);
 $http.post("http://localhost:8001/api/users/",{Email: $scope.Email, Password: $scope.Password}, PostParam,
 {"headers" : { 'Content-Type': 'application/json;charset=utf-8', }}) //'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
