@@ -27,14 +27,17 @@ apt-get install -y apache2
 apt-get install -y php5
 apt-get install -y libapache2-mod-php5
 apt-get install -y php5-mongo
+apt-get install -y php5-mcrypt
 
 sed -i 's|Listen 80|Listen 8001|g' /etc/apache2/ports.conf
 sed -i 's|*:80|*:8001|g' /etc/apache2/sites-available/000-default.conf
 sed -i 's|DocumentRoot /var/www/html|DocumentRoot /home/vagrant/teamboard-adminpanel|g' /etc/apache2/sites-available/000-default.conf
 sed -i 's|Directory /var/www/|Directory /home/vagrant/teamboard-adminpanel/|g' /etc/apache2/apache2.conf
 sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
-
+ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/apache2/conf.d/
+ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/cli/conf.d/
 
 a2enmod rewrite
+php5enmod mcrypt
 
 service apache2 restart
