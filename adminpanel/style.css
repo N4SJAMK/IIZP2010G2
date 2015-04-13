@@ -10,3 +10,14 @@ height: 60px !important;
 overflow: auto;
 }
 
+.table{
+   float:left;
+    height: 50px !important;
+    overflow: auto;
+	border: 1px solid black;
+	table-layout: fixed;
+	position: relative;
+    margin-left: 10px;
+	margin-right: auto;
+	width: 70%;
+}
