@@ -18,6 +18,7 @@ spl_autoload_register(
 
 include_once 'Password-lib.php';
 
+$_POST = json_decode(file_get_contents("php://input"), true);
 
 
 $router = new \api\Router();
