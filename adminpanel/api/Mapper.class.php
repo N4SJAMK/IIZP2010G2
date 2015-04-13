@@ -136,7 +136,7 @@ final class Mapper
             break;
             
             case 'users':
-                $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT, array('cost' => 10));
+                $data['password'] = crypt($data['password'], "$2a$10$".bin2hex(\mcrypt_create_iv(64, MCRYPT_DEV_RANDOM))."$");
             break;
         }
         
