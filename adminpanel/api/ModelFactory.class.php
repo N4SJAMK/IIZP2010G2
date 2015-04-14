@@ -81,20 +81,47 @@ final class ModelFactory
     			'flags'     => FILTER_NULL_ON_FAILURE,
     			'options'   => array('regexp'=>'/^#[[:xdigit:]]{6}$/')
   		  	),
+			
 			'content' => array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'options' => array (
+					'regexp' => '/.+/',
+					'default'   => '',
+				),
+			),
+		),
+		//Validating board-array
+		'boards' => array(
+			'_id' => array (
 				'filter'  => FILTER_VALIDATE_REGEXP,
 				'flags'   => FILTER_NULL_ON_FAILURE,
 				'options' => array (
 					'regexp' => '/.+/',
 				),
 			),
-		),
-		//Validating board-array
-		'boards' => array(
-			'_id'        = FILTER_SANITIZE_ENCODED,
-			'accessCode' = FILTER_SANITIZE_ENCODED,
-			'background' = FILTER_SANITIZE_ENCODED,
-			'createdBy' = FILTER_SANITIZE_ENCODED,
+			
+			'accessCode' = array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'flags'   => FILTER_NULL_ON_FAILURE,
+				'options' => array (
+					'regexp' => '/.+/',
+				),
+			),
+			
+			'background' = array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'options' => array (
+					'regexp' => '/.+/',
+					'default'   => 'none',
+			
+			'createdBy' = array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'flags'   => FILTER_NULL_ON_FAILURE,
+				'options' => array (
+					'regexp' => '/.+/',
+				),
+			),
+			
 			'name' = FILTER_SANITIZE_ENCODED,
 			'size' = array (
 				'filter'  => FILTER_VALIDATE_INT,
@@ -134,25 +161,6 @@ final class ModelFactory
         if (isset($model->__v)) { unset($model->__v); } 
         
         
-        return $model;
-        
-    }
-    
-	/*private function validate_array($args) {
-	    return function ($data) use ($args) {
-	        return filter_input_array($data, $args);
-	    };
-	}*/
-    
-    //not used at this moment
-    private function _validateModel ($type, $model)
-    {
-        
-        // validate model properties against model type
-        
-        // if validate not ok
-        // return false
-        // else
         return $model;
         
     }
