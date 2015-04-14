@@ -11,10 +11,11 @@
       <!-- Custom styles for this template -->  
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
       <script language="javascript" type="text/javascript" src="AccountController.js"></script>
+	   <script language="javascript" type="text/javascript" src="tablefilter.js"></script>
    </head>
    
    <body ng-controller="TicketController">
-      <div class="account">
+     
 		      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
          <div class="container-fluid">
             <div class="navbar-header">
@@ -38,15 +39,15 @@
 	
 	  <div class="testi">
 		
-		 <input type="text"> </input>  <button type="button"  class="btn btn-info" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>
+		 <input class="light-table-filter" data-table="panels"> </input>  <button type="button"  class="btn btn-info" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>	 
       </div>
+	
       <div class="panels">
-
 		 <accordion close-others=true>
-              <div ng-repeat="x in GetUser track by $index " accordion-group heading="{{x.email}} {{x._id}}"  >
+              <div ng-repeat="x in GetUser track by $index | filter:searchText" accordion-group heading="{{x.email}} {{x._id}}"  >
                 <accordion-heading> <div ng-click="BoardCall(x._id); Render = !Render">
 				<span class="label label-success"> {{x.email}}   {{}} </span> <div class="btn-group pull-right">
-				<button type="button" class="glyphicon glyphicon-wrench" ng-click="$event.preventDefault(); $event.stopPropagation()"></button> 
+				<button type="button" class="glyphicon glyphicon-wrench" ng-class="{'selected': x._id === IdSelected}" ng-click="$event.preventDefault(); $event.stopPropagation()"></button> 
 				<button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': x._id === IdSelected}" ng-click="deleteCall(x._id); $event.preventDefault(); $event.stopPropagation()"></button>
                   </div>
 				 </div>
@@ -56,9 +57,10 @@
 				 <accordion  close-others=true>	
                <div  ng-if="Render" ng-repeat="y in GetBoard.boards track by $index"  accordion-group heading="{{y._id}} {{y.name}}" > 
                  <accordion-heading > <div ng-class="{'selected': y._id === IdSelected2}"  ng-click="TicketCall(y._id); Collapsed = !Collapsed" >
-				<span class="label label-info">{{y._id}} {{y.tickets}} </span>
+				<span class="label label-success">{{y.name}}</span>
+				<span class="label label-info">{{y._id}}</span>
 				<div class="btn-group pull-right">
-				<button type="button" class="glyphicon glyphicon-wrench"  ng-click="$event.preventDefault(); $event.stopPropagation();"></button> 
+				<button type="button" class="glyphicon glyphicon-wrench" ng-class="{'selected': y._id === IdSelected2}" ng-click="$event.preventDefault(); $event.stopPropagation();"></button> 
 				<button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': y._id === IdSelected2}" ng-click="deleteBoard(y._id); $event.preventDefault(); $event.stopPropagation()"></button>
                   </div>  </div>		 		
                   </accordion-heading>		
@@ -66,46 +68,38 @@
                   </accordion-group> 
 				  
 				 <accordion > 
-                  <div ng-if="!Collapsed" ng-repeat = "tickets in GetTicket.tickets track by $index" accordion-group heading="{{tickets._id}}" ng-click=" Collapsed = !Collapsed">
+                  <div ng-if="!Collapsed" ng-repeat = "tickets in GetTicket.tickets track by $index" accordion-group heading="{{tickets._id}}" is-disabled="true">
                   <accordion-heading>
-				<span class="label label-warning">{{$index}} {{tickets._id}} {{tickets.position}} </span>
+				<span class="label label-success">{{tickets.content}}</span>
+				<span class="label label-info">{{tickets._id}}</span>
+				<span class="label label-info">{{tickets.position}}</span>
 				<div class="btn-group pull-right"> 
-				<button type="button" class="glyphicon glyphicon-wrench" ng-click="$event.preventDefault(); $event.stopPropagation();"></button> 
 				<button type="button" class="glyphicon glyphicon-trash" ng-class="{'selected': tickets._id === IdSelected3}" ng-click="deleteTicket(tickets._id); $event.preventDefault(); $event.stopPropagation()"></button>
                   </div>  </span>
 				  </div>
 				  </div>
          </div> 
       </div>
-	  </div>
-   <button  class="btn btn-info" ng-click="loadMore()">Load more</button>
-      
-	  <form class="form-horizontal">
+
+	
+	    <form class="form-horizontal">	
+ <h3>Add user</h3>		
          <div class="form-group">
-            <label  class="col-sm-2 control-label">Username</label>
+		
+            <label  class="col-sm-2 control-label"></label>
             <div class="col-sm-10">
                <input type="email" ng-model="Email"  class="form-control"  placeholder="Email address" required autofocus>
             </div>
          </div>
-		 
          <div class="form-group">
-            <label  class="col-sm-2 control-label">Password</label>
+            <label  class="col-sm-2 control-label"></label>
             <div class="col-sm-10">
-             <input type="password" ng-model="Password" class="form-control" " placeholder="Password" required autofocus>
-            </div>
+             <input type="password" ng-model="Password" class="form-control" " placeholder="Password" required autofocus> <button class="btn btn-info" ng-click="postCall()" >Add user</button>
+            </div>		
+			
 			</div>
-			<div class="form-group">
-            <label  class="col-sm-2 control-label">UserLevel</label>
-			<div class="col-sm-10">
-             <select type="text" ng-model="postParam3"> 
-			 <option value="1">Admin</option>
-			 <option value="2">Power user</option>
-			 <option value="3">User</option>
-			 </select>
-            </div>
-			<button class="btn btn-default" ng-click="postCall()" >Add user</button>
-         </div>
-		 
+        </form>
+	  
 	  <div> <h3>Send message</h3> 
 	  <textarea rows="4" cols="50" class=""> </textarea> <br>
 	  <button class="btn btn-info"> Send</button>
