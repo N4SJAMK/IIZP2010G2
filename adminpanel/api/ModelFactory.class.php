@@ -46,8 +46,22 @@ final class ModelFactory
 		),
 		//Validating ticket-array
 		'tickets' => array(
-			'_id' => FILTER_SANITIZE_ENCODED,
-			'board' => FILTER_SANITIZE_ENCODED,
+		
+			'_id' => array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'flags'   => FILTER_NULL_ON_FAILURE,
+				'options' => array (
+					'regexp' => '/.+/',
+				),
+			),
+			
+			'board' => array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'flags'   => FILTER_NULL_ON_FAILURE,
+				'options' => array (
+					'regexp' => '/.+/',
+				),
+			),
 			
 			
 			'position' => array (
@@ -60,15 +74,20 @@ final class ModelFactory
 						'X' => 0,
 					),
 				),
-			),
-				
+			),	
 				
 			'color' => array( //chech if color format is #FFFFFF
     			'filter' => FILTER_VALIDATE_REGEXP,
     			'flags'     => FILTER_NULL_ON_FAILURE,
     			'options'   => array('regexp'=>'/^#[[:xdigit:]]{6}$/')
   		  	),
-			'content' => FILTER_SANITIZE_ENCODED
+			'content' => array (
+				'filter'  => FILTER_VALIDATE_REGEXP,
+				'flags'   => FILTER_NULL_ON_FAILURE,
+				'options' => array (
+					'regexp' => '/.+/',
+				),
+			),
 		),
 		//Validating board-array
 		'boards' => array(
