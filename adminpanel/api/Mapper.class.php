@@ -109,6 +109,25 @@ final class Mapper
     
     public function put ($to, $id = null)
     {
+        $data = $_POST;
+        // unset unnecessary fields
+        unset($data['REQUEST_METHOD']);
+        
+        $model = $this->modelFactory->createModel($to, $data);
+        
+        if ($model) {
+            $collection = $this->db->selectCollection($to);
+            $_id = $model->_id;
+            
+            unset($model->_id);
+            if ($to == 'boards')  { $model->createdBy = new \MongoId($model->createdBy); }
+            if ($to == 'tickets') { $model->board     = new \MongoId($model->board);     }
+            
+            
+            return $collection->update(array('_id' => $_id), json_decode(json_encode($model), true), array());
+        }
+        
+        return null;
     }
     
     
