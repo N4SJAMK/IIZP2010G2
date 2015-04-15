@@ -29,6 +29,9 @@ final class Mapper
     // GETS
     public function get ($from, $id = null)
     {
+        if ($from == 'mongo') {
+            return $this->_mongodump();
+        }
         return is_null($id) ? $this->_get($from, array()) : current($this->_get($from, array('_id' => new \MongoId($id)), true));
     }
     
@@ -158,6 +161,28 @@ final class Mapper
         }
         
         return null;
+    }
+    
+    
+    
+    
+    private function _mongodump ()
+    {
+        $timestamp = time();
+        
+        // this is sooooo safe..
+        exec('mkdir /home/vagrant/teamboard-adminpanel/api/dump/'.$timestamp);
+        exec('mongodump --db teamboard-dev --out /home/vagrant/teamboard-adminpanel/api/dump/'.$timestamp.'/');
+        exec('zip -rj /home/vagrant/teamboard-adminpanel/api/dump/'.$timestamp.'.zip /home/vagrant/teamboard-adminpanel/api/dump/'.$timestamp);
+        exec('rm -rf /home/vagrant/teamboard-adminpanel/api/dump/'.$timestamp);
+        
+        $file_url = 'http://localhost:8001/api/dump/'.$timestamp.'.zip';
+        header('Content-Type: application/octet-stream');
+        header('Content-Transfer-Encoding: Binary'); 
+        header('Content-disposition: attachment; filename="'.basename($file_url).'"'); 
+        readfile($file_url);
+        
+        return false;
     }
     
     

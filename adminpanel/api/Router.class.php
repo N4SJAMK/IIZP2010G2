@@ -18,13 +18,13 @@ final class Router
                 'tickets'                    => 'tickets',
                 'tickets\/([0-9a-fA-F]{24})' => 'tickets',
                 'events'                     => 'events',
-				'database'					 => 'database'
+				'mongo'					     => 'mongo'
                 ),
             'post' => array (
                 'users'    => 'users',
                 'boards'   => 'boards',
                 'tickets'  => 'tickets',
-				'database' => 'database'
+				'mongo'    => 'mongo'
                 ),
             'put' => array (
                 'users\/([0-9a-fA-F]{24})'           => 'users',

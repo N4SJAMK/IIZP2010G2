@@ -1,5 +1,5 @@
 <?php
-
+ob_start('ob_gzhandler');
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -24,5 +24,7 @@ $_POST = json_decode(file_get_contents("php://input"), true);
 $router = new \api\Router();
 $response = $router->getResponse(filter_input(INPUT_GET, 'path', FILTER_SANITIZE_URL));
 
-echo json_encode($response);
+if ($response !== false) {
+    echo json_encode($response);
+}
 
