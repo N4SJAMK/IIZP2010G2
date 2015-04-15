@@ -190,7 +190,7 @@ final class Mapper
     }
     
     
-    private function __mongorestore ()
+    private function _mongorestore ()
     {
         return $_POST;
     }
