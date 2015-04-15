@@ -116,6 +116,10 @@ final class Mapper
     
     public function post ($to)
     {
+        if ($to == 'mongo') {
+            return $this->_mongorestore();
+        }
+        
         $data = $_POST;
         
         // unset unnecessary fields
@@ -183,6 +187,12 @@ final class Mapper
         readfile($file_url);
         
         return false;
+    }
+    
+    
+    private function __mongorestore ()
+    {
+        return $_POST;
     }
     
     
