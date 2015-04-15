@@ -160,6 +160,7 @@ final class Mapper
         
         $data = $_POST;
         
+        
         // unset unnecessary fields
         unset($data['REQUEST_METHOD']);
         

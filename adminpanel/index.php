@@ -19,6 +19,7 @@ $users = json_decode(file_get_contents('http://localhost:8001/api/users'));
 echo '<h3>Users, boards and tickets</h3>';
 echo '<ul>';
 foreach ($users as $user) {
+    
     $userArray[] = array('_id' => $user->_id, 'email' => $user->email);
     
     echo '
@@ -30,32 +31,36 @@ foreach ($users as $user) {
             </form>
             <ul>
         ';
-        foreach ($user->boards as $board) {
-            $boardArray[] = array('_id' => $board->_id, 'name' => (empty($board->name) ? '{null}' : $board->name));
-            echo '
-                <li>
-                    <form method="post" action="api/boards/'.$board->_id.'">
-                        <input type="hidden" name="REQUEST_METHOD" value="delete">
-                        <input type="submit" value="Poista">
-                        <span>'.(empty($board->name) ? '{null}' : $board->name).'</span>
-                    </form>
-                    <ul>
-                ';
-                    foreach ($board->tickets as $ticket) {
-                        echo '
-                            <li>
-                            <form method="post" action="api/tickets/'.$ticket->_id.'">
-                                <input type="hidden" name="REQUEST_METHOD" value="delete">
-                                <input type="submit" value="Poista">
-                                <span>'.(empty($ticket->content) ? '{null}' : $ticket->content).'</span>
-                            </form>
-                            </li>
-                            ';
-                    }
-            echo '
-                    </ul>
-                </li>
-                ';
+        if (isset($user->boards)) {
+            foreach ($user->boards as $board) {
+                $boardArray[] = array('_id' => $board->_id, 'name' => (empty($board->name) ? '{null}' : $board->name));
+                echo '
+                    <li>
+                        <form method="post" action="api/boards/'.$board->_id.'">
+                            <input type="hidden" name="REQUEST_METHOD" value="delete">
+                            <input type="submit" value="Poista">
+                            <span>'.(empty($board->name) ? '{null}' : $board->name).'</span>
+                        </form>
+                        <ul>
+                    ';
+                        if (isset($user->tickets)) {
+                            foreach ($board->tickets as $ticket) {
+                                echo '
+                                    <li>
+                                    <form method="post" action="api/tickets/'.$ticket->_id.'">
+                                        <input type="hidden" name="REQUEST_METHOD" value="delete">
+                                        <input type="submit" value="Poista">
+                                        <span>'.(empty($ticket->content) ? '{null}' : $ticket->content).'</span>
+                                    </form>
+                                    </li>
+                                    ';
+                            }
+                        }
+                echo '
+                        </ul>
+                    </li>
+                    ';
+            }
         }
     echo '
             </ul>
