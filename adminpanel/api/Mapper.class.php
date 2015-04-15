@@ -113,21 +113,40 @@ final class Mapper
         // unset unnecessary fields
         unset($data['REQUEST_METHOD']);
         
+        //modelfactory expects mongoid objects..
+        $data['_id'] = new \MongoId();
+        
+        switch ($to) {
+            case 'boards':
+                $data['createdBy'] = new \MongoId($data['createdBy']);
+                $data['size'] = array ('height' => 8, 'width' => 8);
+            break;
+            
+            case 'tickets':
+                $data['board'] = new \MongoId($data['board']);
+            break;
+            
+            case 'users':
+                $data['password'] = crypt($data['password'], "$2a$10$".bin2hex(\mcrypt_create_iv(64, MCRYPT_DEV_RANDOM))."$");
+            break;
+        }
+        
         $model = $this->modelFactory->createModel($to, $data);
         
-        if ($model) {
+        if ($model)
+        {
             $collection = $this->db->selectCollection($to);
-            $_id = $model->_id;
             
+            $_id = $model->_id;
             unset($model->_id);
             if ($to == 'boards')  { $model->createdBy = new \MongoId($model->createdBy); }
             if ($to == 'tickets') { $model->board     = new \MongoId($model->board);     }
-            
             
             return $collection->update(array('_id' => $_id), json_decode(json_encode($model), true), array());
         }
         
         return null;
+        
     }
     
     
