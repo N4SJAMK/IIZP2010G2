@@ -10,7 +10,8 @@ var app = angular.module('MainApp', ['ngRoute', 'ui.bootstrap']);
 	});*/
 	
 app.controller('TicketController', [ '$http', '$scope', function($http, $scope) {
-         
+           
+		   $scope.GetEvents = [];
 		   $scope.GetUser = [];
 		   $scope.GetTicket = [];
 		   $scope.GetBoard = [];
@@ -18,12 +19,7 @@ app.controller('TicketController', [ '$http', '$scope', function($http, $scope) 
 		  	$scope.Collapsed = true;
 		   $scope.IdSelected = null;
 		   $scope.IdSelected2 = null;
-		   $scope.IdSelected3 = null;
-		 //  $scope.Limit = 5;
-		  
-		/*  $scope.loadMore = function () {
-      $scope.totalDisplayed += 5;  
-    };*/
+		   $scope.IdSelected3 = null;	   
 		   
 var logResult = function (str, data, status, headers)
     {
@@ -32,6 +28,9 @@ var logResult = function (str, data, status, headers)
         "status: " + status + "\n\n" +
 		"headers: " + headers +  "\n\n ;"
     };
+	 $http.get('http://localhost:8001/api/events/').success(function(data) {
+		   $scope.GetEvents = data;
+		    });
 		   
 		 $scope.Update = function() { 
            $http.get('http://localhost:8001/api/users').success(function(data) {
@@ -63,13 +62,10 @@ $scope.postCall = function() {
 	email: $scope.Email,
 	password: $scope.Password
 	};
-	//$scope.msg = {Email: $scope.Email,  password: $scope.Password};
-	$scope.msg = JSON.stringify({email: $scope.Email, password: $scope.Password});
-	//console.log(PostParam);
+
 $http.post("http://localhost:8001/api/users/", PostParam) //'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
 	.success(function (data, status, headers, config)
 	{
-	console.log($scope.msg);
 	
 	PostParam = data;
 	$scope.postCallResult = logResult("POST SUCCESS", data, status, headers);
@@ -80,6 +76,24 @@ $http.post("http://localhost:8001/api/users/", PostParam) //'Content-Type':'appl
 	});
 	};
 
+	$scope.postdb = function() { 
+	
+	var PostParam = {
+	file: $scope.file
+	};
+
+$http.post("http://localhost:8001/api/mongo/", PostParam) //'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+	.success(function (data, status, headers, config)
+	{
+	
+	PostParam = data;
+	$scope.postCallResult = logResult("POST SUCCESS", data, status, headers);
+	})
+	.error(function (data, status, headers)
+	{
+	$scope.postCallResult = logResult("POST ERROR", data, status, headers);
+	});
+	};
 $scope.deleteCall = function(IdSelected3) {
     $http.delete('http://localhost:8001/api/users/' + IdSelected3)
         .success(function(data) {
@@ -112,6 +126,3 @@ $scope.deleteTicket = function(IdSelected3) {
 };	
 
     }]);
-	
-	     
-
