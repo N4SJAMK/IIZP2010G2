@@ -1,14 +1,5 @@
 var app = angular.module('MainApp', ['ngRoute', 'ui.bootstrap']);
 
-/*app.directive('myDialog', function() {
-  
-  return {
-    restrict: 'E',
-    transclude: true, 
-	template: 'Collapse.html'
-	};
-	});*/
-	
 app.controller('TicketController', [ '$http', '$scope', function($http, $scope) {
            
 		   $scope.GetEvents = [];
@@ -99,7 +90,7 @@ $scope.deleteCall = function(IdSelected3) {
         .success(function(data) {
             $scope.Delete = data;
             console.log($scope.Delete);
-        })
+        }) 
         .error(function(data) {
             console.log('Error: ' + data);
         });
@@ -124,5 +115,12 @@ $scope.deleteTicket = function(IdSelected3) {
             console.log('Error: ' + data);
         });
 };	
-
+$scope.UpdateUser = function(IdSelected) {
+$http.get('http://localhost:8001/api/users/'+ IdSelected).success(function(data) {
+		   $scope.GetPutData = data;
+		    });
+}
     }]);
+	
+	     
+
