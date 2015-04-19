@@ -39,7 +39,11 @@
 	
 	  <div class="testi">
 		
-		 <input class="light-table-filter" data-table="panels"> </input>  <button type="button"  class="btn btn-info" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>	 
+		 <input class="light-table-filter" data-table="panels"> </input>  <button type="button"  class="btn btn-info" >Search</button>  <button type="button"  class="btn btn-info" ng-click="Update()" >Update</button>
+<input  type="file" ng-model="file" id="file"></input> 
+<button class="btn btn-info" ng-click="postdb()"  >Upload Database</button>	
+		 <a href="http://localhost:8001/api/mongo/"><button class="btn btn-info"  >Download Database</button></a>
+	 
       </div>
 	
       <div class="panels">
@@ -79,9 +83,9 @@
 				  </div>
 				  </div>
          </div> 
+		 
       </div>
-
-	
+	  
 	    <form class="form-horizontal">	
  <h3>Add user</h3>		
          <div class="form-group">
@@ -100,6 +104,9 @@
 			</div>
         </form>
 	  
+      
+	
+		 
 	  <div> <h3>Send message</h3> 
 	  <textarea rows="4" cols="50" class=""> </textarea> <br>
 	  <button class="btn btn-info"> Send</button>
