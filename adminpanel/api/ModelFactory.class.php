@@ -6,7 +6,7 @@ namespace api;
 final class ModelFactory
 {
 	//this is a test, modify values if need be
-     private $validatingArray = array(
+    private $validatingArray = array(
 		//Validating user-array
 		'users' => array(
 		
@@ -100,7 +100,7 @@ final class ModelFactory
 				),
 			),
 			
-			'accessCode' = array (
+			'accessCode' => array (
 				'filter'  => FILTER_VALIDATE_REGEXP,
 				'flags'   => FILTER_NULL_ON_FAILURE,
 				'options' => array (
@@ -108,14 +108,14 @@ final class ModelFactory
 				),
 			),
 			
-			'background' = array (
+			'background' => array (
 				'filter'  => FILTER_VALIDATE_REGEXP,
 				'options' => array (
 					'regexp' => '/.+/',
 					'default'   => 'none',
                 ),
             ),
-			'createdBy' = array (
+			'createdBy' => array (
 				'filter'  => FILTER_VALIDATE_REGEXP,
 				'flags'   => FILTER_NULL_ON_FAILURE,
 				'options' => array (
@@ -123,8 +123,8 @@ final class ModelFactory
 				),
 			),
 			
-			'name' = FILTER_SANITIZE_ENCODED,
-			'size' = array (
+			'name' => FILTER_SANITIZE_ENCODED,
+			'size' => array (
 				'filter'  => FILTER_VALIDATE_INT,
 				'flags'   => FILTER_REQUIRE_ARRAY,
 				'options' => array (
@@ -134,7 +134,7 @@ final class ModelFactory
 					),
 				),
 			),
-			'__tickets'  = array(
+			'__tickets'  => array(
 				'filter' => FILTER_VALIDATE_INT,
 				'flags' => FILTER_FORCE_ARRAY
 			)
