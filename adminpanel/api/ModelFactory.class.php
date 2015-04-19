@@ -113,7 +113,8 @@ final class ModelFactory
 				'options' => array (
 					'regexp' => '/.+/',
 					'default'   => 'none',
-			
+                ),
+            ),
 			'createdBy' = array (
 				'filter'  => FILTER_VALIDATE_REGEXP,
 				'flags'   => FILTER_NULL_ON_FAILURE,
