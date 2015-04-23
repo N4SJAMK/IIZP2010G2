@@ -152,7 +152,7 @@ final class ModelFactory
         if (isset($array['createdBy'])) { $array['createdBy'] = $array['createdBy']->{'$id'}; }
         if (isset($array['data']['id'])) { $array['data']['id'] = $array['data']['id']->{'$id'}; }
 		
-		$validated = filter_var_array($array, $validatingArray[$type]);
+		$validated = filter_var_array($array, $this->validatingArray[$type]);
 		
         // array to stdClass object
         $model = json_decode(json_encode($validated));
